@@ -50,10 +50,11 @@
             const month = String(today.getMonth() + 1).padStart(2, '0'); // getMonth() είναι 0-indexed, οπότε +1
             const day = String(today.getDate()).padStart(2, '0');
 
-            const formattedDate = `${year}-${month}-${day}`; // Παράδειγμα: "2025-06-10"
+            const formattedDate = `${year}/${month}/${day}`; // Παράδειγμα: "2025-06-10"
             // 3. Δημιούργησε τη συμβολοσειρά του QUERY
             // Σημείωση: Χρησιμοποιούμε backticks (`` ` ``) για template literals για ευκολότερη συνένωση
-            strQueryForURI = `select * where D = date '${formattedDate}' order by D,A,E`;
+            // strQueryForURI = `select * where D = date '${formattedDate}' order by D,A,E`;
+			strQueryForURI = 'select * order by D,A,E';
 
             console.log(strQueryForURI);
 
