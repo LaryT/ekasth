@@ -53,16 +53,12 @@
             const formattedDate = `${year}-${month}-${day}`; // Παράδειγμα: "2025-06-10"
             // 3. Δημιούργησε τη συμβολοσειρά του QUERY
             // Σημείωση: Χρησιμοποιούμε backticks (`` ` ``) για template literals για ευκολότερη συνένωση
-            strQueryForURI = `select * where D = date '${formattedDate}' order by D,A,E`;
-			//strQueryForURI = 'select * order by D,A,E';
+            strQueryForURI = `select * where D = date '${formattedDate}' order by D,B,A,E`;
 
             console.log(strQueryForURI);
 
 
 
-			// to parakatv douelei se periptvsh poy uelei kaneis mono to 2018
-			// gia na periorhsei tis eggrafes
-			//strQueryForURI = 'select * where D like "%2018%" order by D,A';
 
 
 			queryString = encodeURIComponent(strQueryForURI);
@@ -128,6 +124,26 @@
                     var iDiv = document.createElement('div');
                     iDiv.id = 'omilos-kathgoras-div-' + row;
                     iDiv.innerHTML = '<div class="col">'+data.getFormattedValue(row, 0)+'</div>';
+                    iDiv.className ='row';
+
+                    // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
+                    if (parentElement) { // Είναι καλή πρακτική να ελέγχεις αν το γονικό στοιχείο υπάρχει
+                        parentElement.appendChild(iDiv);
+                    } else {
+                        console.error("Το γονικό στοιχείο με ID 'pills-prg-container-id' δεν βρέθηκε.");
+                    }                    
+                }
+
+                if(curAgvnistikh != data.getFormattedValue(row, 3) ){
+                    curAgvnistikh = data.getFormattedValue(row, 3);
+
+
+                    // 1. Βρες το γονικό στοιχείο με την ID 'pills-prg-container-id'
+                    var parentElement = document.getElementById('pills-prg-container-id');
+                    // 2. Δημιουργια του νέου ελεμεντ
+                    var iDiv = document.createElement('div');
+                    iDiv.id = 'agvnistikh-omiloy-div-' + row;
+                    iDiv.innerHTML = '<div class="col"> Αγωνιστική : '+data.getFormattedValue(row, 3)+'</div>';
                     iDiv.className ='row';
 
                     // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
