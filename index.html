@@ -53,8 +53,8 @@
             const formattedDate = `${year}/${month}/${day}`; // Παράδειγμα: "2025-06-10"
             // 3. Δημιούργησε τη συμβολοσειρά του QUERY
             // Σημείωση: Χρησιμοποιούμε backticks (`` ` ``) για template literals για ευκολότερη συνένωση
-            // strQueryForURI = `select * where D = date '${formattedDate}' order by D,A,E`;
-			strQueryForURI = 'select * order by D,A,E';
+            strQueryForURI = `select * where D = date '${formattedDate}' order by D,A,E`;
+			//strQueryForURI = 'select * order by D,A,E';
 
             console.log(strQueryForURI);
 
