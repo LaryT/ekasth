@@ -96,7 +96,8 @@
               
               console.log(`posesEggrafes ${posesEggrafes}`);
               for (var row=0; row < posesEggrafes; row++){
-      
+                console.log(`row ${row}`);
+
                   /* --- tsek an h hmeromhnia einai kenh s
                           hmainei o agvnas den exei oristhei na bazei mh orismenoi agvnes
                   */
@@ -163,7 +164,7 @@
                     var iDiv = document.createElement('div');
                     iDiv.id = 'agvnas-div-' + row;
                     iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">'+data.getFormattedValue(row, 3)+'</span> <span class="MatchListItem__time"> '+data.getFormattedValue(row, 4)+'</span></div>';
-                    iDiv.className ='row MatchList__subtitle';
+                    iDiv.className ='row';
 
                     // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
                     if (parentElement) { // Είναι καλή πρακτική να ελέγχεις αν το γονικό στοιχείο υπάρχει
