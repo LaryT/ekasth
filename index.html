@@ -139,7 +139,6 @@
                 if(curAgvnistikh != data.getFormattedValue(row, 1) ){
                     curAgvnistikh = data.getFormattedValue(row, 1);
 
-
                     // 1. Βρες το γονικό στοιχείο με την ID 'pills-prg-container-id'
                     var parentElement = document.getElementById('pills-prg-container-id');
                     // 2. Δημιουργια του νέου ελεμεντ
@@ -155,6 +154,23 @@
                         console.error("Το γονικό στοιχείο με ID 'pills-prg-container-id' δεν βρέθηκε.");
                     }                    
                 }
+
+
+                ///---------- AGVNAS
+                   // 1. Βρες το γονικό στοιχείο με την ID 'pills-prg-container-id'
+                   var parentElement = document.getElementById('pills-prg-container-id');
+                    // 2. Δημιουργια του νέου ελεμεντ
+                    var iDiv = document.createElement('div');
+                    iDiv.id = 'agvnas-div-' + row;
+                    iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">'+data.getFormattedValue(row, 3)+'</span> <span class="MatchListItem__time"> '+data.getFormattedValue(row, 4)+'</span></div>';
+                    iDiv.className ='row MatchList__subtitle';
+
+                    // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
+                    if (parentElement) { // Είναι καλή πρακτική να ελέγχεις αν το γονικό στοιχείο υπάρχει
+                        parentElement.appendChild(iDiv);
+                    } else {
+                        console.error("Το γονικό στοιχείο με ID 'pills-prg-container-id' δεν βρέθηκε.");
+                    }                                    
 
                 /*
                 ftiaxe_rows_agvnvn_kai_bale_mesa_se_antitoixh_agvnistikh(row,ftiaxeHemromhniaXvrisKethetes(curAgvnistikh),data);
@@ -203,7 +219,34 @@
             padding: 6px 20px;
             border-bottom: 1px solid #e2e4e6;
             user-select: none;
-        }            
+        }    
+        .MatchListItem__header {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 65px;
+            flex: 0 0 65px;
+            padding: 0 5px 0 0;
+            border-right: 1px solid #e2e4e6;
+        }         
+        .MatchListItem__time, .MatchListItem__year {
+            color: #fff;
+            font: 700 12px / 1.16 'Fira Sans', Helvetica, Arial, sans-serif;
+            letter-spacing: .04em;
+            color: #003e5e;
+            text-align: center;
+        }
+        .MatchListItem__date {
+            color: #fff;
+            font: normal 11px / 1.27 'Fira Sans', Helvetica, Arial, sans-serif;
+            letter-spacing: .04em;
+            color: #003e5e;
+            letter-spacing: .01em;
+            text-transform: uppercase;
+            text-align: center;
+        }               
     </style>
 
   </head>
