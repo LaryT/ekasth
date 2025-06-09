@@ -41,8 +41,10 @@
     		var queryString; 
     		var strQueryForURI;
 
-			strQueryForURI = 'select * order by D,A,E';
-            strQueryForURI = "select * where D = date '" & TEXT(TODAY(); "yyyy-MM-dd") & "' order by D,A,E";
+			// strQueryForURI = 'select * order by D,A,E';
+            // strQueryForURI = "select * where D = date '" & TEXT(TODAY(); "yyyy-MM-dd") & "' order by D,A,E";
+            strQueryForURI = "select * where D = date '" & TEXT(TODAY(); "dd-MM-yy") & "' order by D,A,E";
+
 
 			// to parakatv douelei se periptvsh poy uelei kaneis mono to 2018
 			// gia na periorhsei tis eggrafes
