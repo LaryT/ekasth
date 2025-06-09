@@ -146,7 +146,7 @@
                     var iDiv = document.createElement('div');
                     iDiv.id = 'agvnistikh-omiloy-div-' + row;
                     iDiv.innerHTML = '<div class="col"> ΑΓΩΝ : '+data.getFormattedValue(row, 1)+'</div>';
-                    iDiv.className ='row';
+                    iDiv.className ='row MatchList__subtitle';
 
                     // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
                     if (parentElement) { // Είναι καλή πρακτική να ελέγχεις αν το γονικό στοιχείο υπάρχει
@@ -173,24 +173,35 @@
     </script>
 
     <style>
-         .MatchcenterHomepageWidget__header {
-                color: #0f253a;
-                font: 400 2.5em / 1 Mansalva, Helvetica, Arial, sans-serif;
-                letter-spacing: .12em;
-                text-align: center;
-                padding: 12px 0;
-                margin-bottom: 15px;
-                border-bottom: 5px solid #ff0040;
-            }    
-            .MatchcenterHomepageOmilos__header {
-                font: normal 10px / 1 'Fira Sans', Helvetica, Arial, sans-serif;
-                letter-spacing: .12em;
-                text-transform: uppercase;
-                font-weight: 700;
-                padding: 6px 20px;
-                text-align: center;
-                user-select: none;
-            }                  
+         .MatchcenterHomepageWidget__header{
+            color: #0f253a;
+            font: 400 2.5em / 1 Mansalva, Helvetica, Arial, sans-serif;
+            letter-spacing: .12em;
+            text-align: center;
+            padding: 12px 0;
+            margin-bottom: 15px;
+            border-bottom: 5px solid #ff0040;
+        }    
+        .MatchcenterHomepageOmilos__header{
+            font: normal 1.0em / 1 'Fira Sans', Helvetica, Arial, sans-serif;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 6px 20px;
+            text-align: center;
+            user-select: none;
+        }                 
+        .MatchList__subtitle{
+            color: #fff;
+            font: normal 10px / 1  'Fira Sans', Helvetica, Arial, sans-serif;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: #003e5e;
+            text-align: center;
+            padding: 8px 20px;
+            border-bottom: 1px solid #e2e4e6;
+            user-select: none;
+        }            
     </style>
 
   </head>
