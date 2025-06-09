@@ -38,8 +38,8 @@
         };
 
         function drawDiorganvseis(){
-    		var queryString; 
-    		var strQueryForURI;
+    		const queryString; 
+    		const strQueryForURI;
 
 			// strQueryForURI = 'select * order by D,A,E';
             // 1. Πάρε τη σημερινή ημερομηνία
@@ -51,10 +51,9 @@
             const day = String(today.getDate()).padStart(2, '0');
 
             const formattedDate = `${day}-${month}-${year}`; // Παράδειγμα: "2025-06-10"
-
             // 3. Δημιούργησε τη συμβολοσειρά του QUERY
             // Σημείωση: Χρησιμοποιούμε backticks (`` ` ``) για template literals για ευκολότερη συνένωση
-            const strQueryForURI = `select * where D = date '${formattedDate}' order by D,A,E`;
+            strQueryForURI = `select * where D = date '${formattedDate}' order by D,A,E`;
 
             console.log(strQueryForURI);
 
