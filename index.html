@@ -124,7 +124,7 @@
                     var iDiv = document.createElement('div');
                     iDiv.id = 'omilos-kathgoras-div-' + row;
                     iDiv.innerHTML = '<div class="col">'+data.getFormattedValue(row, 0)+'</div>';
-                    iDiv.className ='row';
+                    iDiv.className ='row bg-primary-subtle';
 
                     // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
                     if (parentElement) { // Είναι καλή πρακτική να ελέγχεις αν το γονικό στοιχείο υπάρχει
@@ -134,8 +134,10 @@
                     }                    
                 }
 
-                if(curAgvnistikh != data.getFormattedValue(row, 3) ){
-                    curAgvnistikh = data.getFormattedValue(row, 3);
+                //---- STOIXEIA ths αγωνιστική - omiλoy poy anhkei o agvnaw πρωτη εμφανιση (today σημερα)
+
+                if(curAgvnistikh != data.getFormattedValue(row, 1) ){
+                    curAgvnistikh = data.getFormattedValue(row, 1);
 
 
                     // 1. Βρες το γονικό στοιχείο με την ID 'pills-prg-container-id'
@@ -143,7 +145,7 @@
                     // 2. Δημιουργια του νέου ελεμεντ
                     var iDiv = document.createElement('div');
                     iDiv.id = 'agvnistikh-omiloy-div-' + row;
-                    iDiv.innerHTML = '<div class="col"> Αγωνιστική : '+data.getFormattedValue(row, 3)+'</div>';
+                    iDiv.innerHTML = '<div class="col"> Αγωνιστική : '+data.getFormattedValue(row, 1)+'</div>';
                     iDiv.className ='row';
 
                     // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
