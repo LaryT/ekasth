@@ -177,11 +177,7 @@
 
                 const day = dateObject.getDate();
                 const monthAbbr = greekMonthsAbbr[dateObject.getMonth()];
-
                 const formattedDate = `${day} ${monthAbbr}`;
-
-                console.log(formattedDate);
-
                 // Τέλος υπολογισμός -- μορφή της ημερομηνίας
 
 
@@ -200,23 +196,66 @@
                     console.error("Το γονικό στοιχείο με ID 'pills-prg-container-id' δεν βρέθηκε.");
                 }                                    
 
+                //------ ΟΜΑΔΕΣ και ΣΚΟΡ αγώνα
+                 var parentElement = document.getElementById('pills-prg-container-id');
+
+                if (parentElement) {
+                  // Δημιουργία των στοιχείων
+                  var matchContentDiv = document.createElement('div');
+                  matchContentDiv.classList.add('MatchListItem__content');
+
+                  var homeTeamDiv = document.createElement('div');
+                  homeTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home');
+
+                  var homeTeamNameSpan = document.createElement('span');
+                  homeTeamNameSpan.classList.add('MatchListItem__teamName');
+                  homeTeamNameSpan.textContent = data.getFormattedValue(row, 6);
+
+                  var homeTeamScoreSpan = document.createElement('span');
+                  homeTeamScoreSpan.classList.add('MatchListItem__teamScore');
+                  var homeScore = data.getFormattedValue(row, 8); // Προσωρινή τιμή, αντικαταστήστε με το πραγματικό σκορ
+                  homeTeamScoreSpan.textContent = homeScore;
+
+                  var awayTeamDiv = document.createElement('div');
+                  awayTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--away');
+
+                  var awayTeamNameSpan = document.createElement('span');
+                  awayTeamNameSpan.classList.add('MatchListItem__teamName');
+                  awayTeamNameSpan.textContent = data.getFormattedValue(row, 7);
+
+                  var awayTeamScoreSpan = document.createElement('span');
+                  awayTeamScoreSpan.classList.add('MatchListItem__teamScore');
+                  var awayScore = data.getFormattedValue(row, 9); // Προσωρινή τιμή, αντικαταστήστε με το πραγματικό σκορ
+                  awayTeamScoreSpan.textContent = awayScore;
+
+                  // Προσθήκη των στοιχείων στο DOM
+                  homeTeamDiv.appendChild(homeTeamNameSpan);
+                  homeTeamDiv.appendChild(homeTeamScoreSpan);
+
+                  awayTeamDiv.appendChild(awayTeamNameSpan);
+                  awayTeamDiv.appendChild(awayTeamScoreSpan);
+
+                  matchContentDiv.appendChild(homeTeamDiv);
+                  matchContentDiv.appendChild(awayTeamDiv);
+
+                  // Έλεγχος νικητή και προσθήκη της κλάσης "MatchListItem__team--winning"
+                  if (homeScore > awayScore) {
+                    homeTeamDiv.classList.add('MatchListItem__team--winning');
+                  } else if (awayScore > homeScore) {
+                    awayTeamDiv.classList.add('MatchListItem__team--winning');
+                  }
+
+                  // Προσθήκη ολόκληρης της δομής στο parentElement
+                  parentElement.appendChild(matchContentDiv);
+                } else {
+                  console.error("Το στοιχείο με id 'pills-prg-container-id' δεν βρέθηκε.");
+                }
 
 
 
 
 
 
-
-<div class="MatchListItem__content">
-  <div class="MatchListItem__team MatchListItem__team--home MatchListItem__team--winning">
-    <span class="MatchListItem__teamName">Οκλαχόμα Σίτι Θάντερ</span>
-    <span class="MatchListItem__teamScore">123</span>
-  </div>
-  <div class="MatchListItem__team MatchListItem__team--away ">
-    <span class="MatchListItem__teamName">Ιντιάνα Πέισερς</span>
-    <span class="MatchListItem__teamScore">107</span>
-  </div>
-</div>
 
 
 
