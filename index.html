@@ -60,7 +60,6 @@
             }
             data = response.getDataTable(); // Assign to global 'data'
             posesEggrafes = data.getNumberOfRows(); // Assign to global 'posesEggrafes'
-            alert( ' I AM at ; handle_DrawDiorganvseis_DataQueryResponse');
             console.log('handle_DrawDiorganvseis_DataQueryResponse posesEggrafes :' +posesEggrafes);
 
             // Global variables for tab state (moved here from inside functions)
@@ -419,7 +418,6 @@
         // --- Event Listeners για τα Tabs ---
         document.addEventListener('DOMContentLoaded', function () {
 
-                alert("addEventListener");
 
                 const pillsPrgTab = document.getElementById('pills-prg-tab');
                 const pillsOrismoiTab = document.getElementById('pills-orismoi-tab');
@@ -438,7 +436,6 @@
 
                 // Initial render for the active tab when the data is loaded
                 if (document.querySelector('#pills-prg.show.active')) {
-                    alert("in arxiko trejimo  -->    renderMatches");
                     renderMatches('pills-prg-container-id');
                 }
         });
