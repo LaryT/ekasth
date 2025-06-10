@@ -21,6 +21,37 @@
 		google.charts.setOnLoadCallback(drawchart);	
 
 
+        // --- Event Listeners για τα Tabs ---
+            document.addEventListener('DOMContentLoaded', function() {
+                const pillsPrgTab = document.getElementById('pills-prg-tab');
+                const pillsOrismoiTab = document.getElementById('pills-orismoi-tab');
+
+                if (pillsPrgTab) {
+                    pillsPrgTab.addEventListener('shown.bs.tab', function (event) {
+                        // Καλέστε τη συνάρτηση για τους ΑΓΩΝΕΣ όταν επιλεγεί το tab
+                        renderMatches('pills-prg-container-id');
+                    });
+                }
+
+                if (pillsOrismoiTab) {
+                    pillsOrismoiTab.addEventListener('shown.bs.tab', function (event) {
+                        // Καλέστε τη συνάρτηση για τους ΟΡΙΣΜΟΥΣ όταν επιλεγεί το tab
+                        renderOrismoi('pills-orismoi-container-id');
+                    });
+                }
+
+                // Καλείται την πρώτη φορά που φορτώνεται η σελίδα για το ενεργό tab
+                // Βεβαιωθείτε ότι καλείται η σωστή συνάρτηση για το αρχικά ενεργό tab
+                // (Σε αυτό το HTML, το 'pills-prg' είναι το active tab)
+                if (document.querySelector('#pills-prg.show.active')) {
+                    renderMatches('pills-prg-container-id');
+                }
+            });
+
+        //---------------
+
+
+
 
         function drawchart(){						
 
@@ -67,36 +98,7 @@
 
 
             //---------------
-            // --- Event Listeners για τα Tabs ---
-            document.addEventListener('DOMContentLoaded', function() {
-                const pillsPrgTab = document.getElementById('pills-prg-tab');
-                const pillsOrismoiTab = document.getElementById('pills-orismoi-tab');
 
-                if (pillsPrgTab) {
-                    pillsPrgTab.addEventListener('shown.bs.tab', function (event) {
-                        // Καλέστε τη συνάρτηση για τους ΑΓΩΝΕΣ όταν επιλεγεί το tab
-                        renderMatches('pills-prg-container-id');
-                    });
-                }
-
-                if (pillsOrismoiTab) {
-                    pillsOrismoiTab.addEventListener('shown.bs.tab', function (event) {
-                        // Καλέστε τη συνάρτηση για τους ΟΡΙΣΜΟΥΣ όταν επιλεγεί το tab
-                        renderOrismoi('pills-orismoi-container-id');
-                    });
-                }
-
-                // Καλείται την πρώτη φορά που φορτώνεται η σελίδα για το ενεργό tab
-                // Βεβαιωθείτε ότι καλείται η σωστή συνάρτηση για το αρχικά ενεργό tab
-                // (Σε αυτό το HTML, το 'pills-prg' είναι το active tab)
-                if (document.querySelector('#pills-prg.show.active')) {
-                    renderMatches('pills-prg-container-id');
-                }
-            });
-
-
-
-            //---------------
 
         }
         
