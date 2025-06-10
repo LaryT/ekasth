@@ -200,11 +200,37 @@
                     console.error("Το γονικό στοιχείο με ID 'pills-prg-container-id' δεν βρέθηκε.");
                 }                                    
 
+
+
+
+
+
+
+
+<div class="MatchListItem__content">
+  <div class="MatchListItem__team MatchListItem__team--home MatchListItem__team--winning">
+    <span class="MatchListItem__teamName">Οκλαχόμα Σίτι Θάντερ</span>
+    <span class="MatchListItem__teamScore">123</span>
+  </div>
+  <div class="MatchListItem__team MatchListItem__team--away ">
+    <span class="MatchListItem__teamName">Ιντιάνα Πέισερς</span>
+    <span class="MatchListItem__teamScore">107</span>
+  </div>
+</div>
+
+
+
                 /*
                 ftiaxe_rows_agvnvn_kai_bale_mesa_se_antitoixh_agvnistikh(row,ftiaxeHemromhniaXvrisKethetes(curAgvnistikh),data);
                 */            
   
               } //-- END loop s' oles tiw eggrafes
+
+
+
+
+
+
                 //---  emploutiseMenuAtomvn();
               // krybei oloyw toyw orismoyw ana atoma (etsi prepei)
                //$(".cl-diaithtes-krites").hide();  
@@ -286,7 +312,41 @@
             text-align: center;
             line-height: 0.8;            
         }
-            
+        
+        /* --- ΟΜΑΔΕΣ ΑΓΩΝΑ -- */
+        .MatchListItem__content {
+            flex: 1;
+        }        
+        .MatchListItem__team {
+            display: flex;
+            padding: 0 15px;
+        }        
+        .MatchListItem__team--home, 
+        .MatchListItem__team--away {
+            margin-bottom: 10px;
+        }         
+        .MatchListItem__teamName {
+            margin-right: auto
+        }
+        .MatchListItem__teamName,
+        .MatchListItem__teamScore {
+            color: #003e5e;
+            font-size:  12px;
+            font-weight: 400;
+            letter-spacing: .04em;
+        }
+        .MatchListItem__teamScore {
+            min-width: 1ch;
+            text-align: center
+        }
+        .MatchListItem__team--winning .MatchListItem__teamName,
+        .MatchListItem__team--winning .MatchListItem__teamScore {
+            font-weight: 700
+        }
+
+        
+
+
     </style>
 
   </head>
