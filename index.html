@@ -329,7 +329,7 @@
                     
                     let diaititesDiv = document.createElement('div');
                     diaititesDiv.classList.add('MatchListItem__section-title');
-                    diaititesDiv.textContent = 'Διαιτητές:';
+                    diaititesDiv.textContent = 'ΔΙΑΤΗΤΕΣ:';
                     diaititesCol.appendChild(diaititesDiv);
 
                     let diaititesList = document.createElement('ul');
@@ -356,7 +356,8 @@
                     }
                     if (!diaititis1 && !diaititis2 && !diaititis3) {
                         let li = document.createElement('li');
-                        li.textContent = "Δεν έχουν οριστεί";
+                        //-- li.textContent = "Δεν έχουν οριστεί"΄
+                        li.innerHTML = "<i class='fal fa-users-slash fa-xs'></i>";
                         diaititesList.appendChild(li);
                     }
                     diaititesCol.appendChild(diaititesList); // Append diaititesList to its column
@@ -368,7 +369,7 @@
 
                     let komisariosDiv = document.createElement('div');
                     komisariosDiv.classList.add('MatchListItem__section-title');
-                    komisariosDiv.textContent = 'Κομισάριος:';
+                    komisariosDiv.textContent = 'ΚΟΜΙΣΑΡΙΟΣ:';
                     komisariosCol.appendChild(komisariosDiv);
 
                     let komisariosValue = data.getFormattedValue(row, 55); // Use the correct column for commissioner
@@ -380,7 +381,8 @@
                     } else {
                         let pKomisarios = document.createElement('p');
                         pKomisarios.classList.add('MatchListItem__single-value');
-                        pKomisarios.textContent = "Δεν έχει οριστεί";
+                        pKomisarios.innerHTML = "<i class='fal fa-users-slash fa-xs'></i>";
+                        //-- pKomisarios.textContent = "Δεν έχει οριστεί";
                         komisariosCol.appendChild(pKomisarios);
                     }
                     orismoiRow.appendChild(komisariosCol); // Append komisariosCol to the row
@@ -391,7 +393,7 @@
 
                     let kritesDiv = document.createElement('div');
                     kritesDiv.classList.add('MatchListItem__section-title');
-                    kritesDiv.textContent = 'Κριτές:';
+                    kritesDiv.textContent = 'ΚΡΙΤΕΣ:';
                     kritesCol.appendChild(kritesDiv);
 
                     let kritesList = document.createElement('ul');
@@ -419,7 +421,9 @@
                     }
                     if (!kritis1 && !kritis2 && !kritis3) {
                         let li = document.createElement('li');
-                        li.textContent = "Δεν έχουν οριστεί";
+                        // li.textContent = "Δεν έχουν οριστεί";
+                        li.innerHTML = "<i class='fal fa-users-slash fa-xs'></i>";
+
                         kritesList.appendChild(li);
                     }
                     kritesCol.appendChild(kritesList); // Append kritesList to its column
@@ -592,7 +596,7 @@
         .MatchListItem__orismoi-details {
             flex: 1 0 100%; /* Take full width below main match content */
             padding: 10px 15px 0 65px; /* Adjust padding to align with MatchListItem__content */
-            border-top: .5px dashed #e2e4e6; /* Separator for clarity */
+            border-top: .8px dashed #e2e4e6; /* Separator for clarity */
             margin-top: 10px;
         }
 
