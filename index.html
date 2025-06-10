@@ -206,12 +206,17 @@
                 // Καθαρίζουμε το περιεχόμενο πριν προσθέσουμε νέα στοιχεία
                 parentElement.innerHTML = '';
 
+
+
+
                 // Επαναφέρουμε τις μεταβλητές κατάστασης για αυτό το tab
                 curOmilosKathgoria_orismoi = "";
                 curAgvnistikh_orismoi = "";
 
+
                 for (let row = 0; row < posesEggrafes; row++) {
-                    // console.log(`row ${row}`);
+                    // metablhth gia to όταν υπάρχει ΡΕΠΟ σε μια ομάδα να μην εμφανίζονται οι διαιτητές - Κριτές κλπα
+                    var isRepo=false;
 
                     // --- Στοιχεία Κατηγορίας/Ομίλου ---
                     if (curOmilosKathgoria_orismoi !== data.getFormattedValue(row, 0)) {
@@ -258,6 +263,7 @@
 
                     if (teamAValue === "-" || teamBValue === "-") {
                         iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time">Ρ Ε Π Ο </span></div>';
+                        isRepo=true
                     } else if (statusValue === "ΤΕΛΙΚΟ") {
                         iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> ΤΕΛΙΚΟ </span> </div>';
                     } else if (statusValue === "ΑΑ") {
@@ -322,6 +328,9 @@
                     // Create a new Bootstrap row to hold the three columns
                     let orismoiRow = document.createElement('div');
                     orismoiRow.classList.add('row', 'g-3'); // 'g-3' adds some gutter spacing between columns
+                    if(isRepo){
+                        orismoiRow.classList.add('d-none');
+                    }
 
                     // --- α. Διαιτητές (Column 1) ---
                     let diaititesCol = document.createElement('div');
