@@ -68,10 +68,13 @@
             let curOmilosKathgoria_orismoi = "";
             let curAgvnistikh_orismoi = "";
 
+            //--- trexei agvnes-apotelesmata mia fora arxika kai gemizei antistoixo tab
             renderMatches('pills-prg-container-id');
-
             document.getElementById('pills-prg').classList.add('active');
             document.getElementById('pills-prg').classList.add('show');
+
+            //--- trexei orismous mia fora arxika kai gemizei antistoixo tab
+            renderOrismoi('pills-orismoi-container-id');
 
         }   //--- END of function handle_DrawDiorganvseis_DataQueryResponse(response)
 
@@ -92,9 +95,7 @@
                 curOmilosKathgoria_prg = "";
                 curAgvnistikh_prg = "";
 
-                //--- console.log( 'in renderMatches, posesEggrafes = ' + posesEggrafes);
                 for (let row = 0; row < posesEggrafes; row++) {
-                     console.log(`renderMatches() ->  row ${row}`);
 
                     // --- Στοιχεία Κατηγορίας/Ομίλου ---
                     if (curOmilosKathgoria_prg !== data.getFormattedValue(row, 0)) {
@@ -520,7 +521,7 @@
         // --- Event Listeners για τα Tabs ---
         document.addEventListener('DOMContentLoaded', function () {
 
-
+/*
                 const pillsPrgTab = document.getElementById('pills-prg-tab');
                 const pillsOrismoiTab = document.getElementById('pills-orismoi-tab');
 
@@ -540,11 +541,10 @@
                 if (document.querySelector('#pills-prg.show.active')) {
                     renderMatches('pills-prg-container-id');
                 }
-
-        });
-            
+*/
+            console.log('olo se sxolia to document.addEventListener(DOMContentLoaded, function ()');
+        });  
           
-
 
     </script>
 
