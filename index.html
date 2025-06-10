@@ -146,12 +146,29 @@
                     }
                     parentElement.appendChild(iDivAgvnas);
 
-                    // --- Ομάδες και Σκορ Αγώνα ---
+                 // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---
                     let matchContentDiv = document.createElement('div');
                     matchContentDiv.classList.add('MatchListItem__content');
 
                     let homeTeamDiv = document.createElement('div');
                     homeTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home');
+
+                    // --- ΛΟΓΟΤΥΠΟ ΓΗΠΕΔΟΥΧΟΥ ---
+                    const homeLogoUrl = data.getFormattedValue(row, 53); // URL λογότυπου γηπεδούχου
+                    if (homeLogoUrl) {
+                        let homeLogoDiv = document.createElement('div');
+                        homeLogoDiv.classList.add('MatchListItem__teamLogo'); // Προσθέτουμε νέα κλάση για styling
+                        homeLogoDiv.style.backgroundImage = `url('${homeLogoUrl}')`;
+                        // Προσθέτουμε στυλ για να διασφαλίσουμε ότι το λογότυπο εμφανίζεται σωστά
+                        // Μπορείτε να ρυθμίσετε το μέγεθος (π.χ. 20px) ανάλογα με το ύψος της γραμματοσειράς
+                        homeLogoDiv.style.width = '20px';  // Σταθερό πλάτος
+                        homeLogoDiv.style.height = '20px'; // Σταθερό ύψος, ίσο με το ύψος της γραμματοσειράς
+                        homeLogoDiv.style.backgroundSize = 'contain'; // Το λογότυπο θα χωράει μέσα στο div
+                        homeLogoDiv.style.backgroundRepeat = 'no-repeat'; // Όχι επανάληψη εικόνας
+                        homeLogoDiv.style.backgroundPosition = 'center'; // Κεντράρισμα εικόνας
+                        homeLogoDiv.style.marginRight = '8px'; // Απόσταση από το όνομα της ομάδας
+                        homeTeamDiv.appendChild(homeLogoDiv); // Προσθέτουμε το λογότυπο πριν το όνομα
+                    }
 
                     let homeTeamNameSpan = document.createElement('span');
                     homeTeamNameSpan.classList.add('MatchListItem__teamName');
@@ -160,13 +177,28 @@
                     let homeTeamScoreSpan = document.createElement('span');
                     homeTeamScoreSpan.classList.add('MatchListItem__teamScore');
                     const homeScore = parseFloat(data.getFormattedValue(row, 8)); // Μετατροπή σε αριθμό
-                    homeTeamScoreSpan.textContent = isNaN(homeScore) ? '' : homeScore; // Εμφάνιση κενού αν δεν είναι αριθμός
+                    homeTeamScoreSpan.textContent = isNaN(homeScore) ? '-' : homeScore; // Εμφάνιση παύλας αν δεν είναι αριθμός
 
                     homeTeamDiv.appendChild(homeTeamNameSpan);
                     homeTeamDiv.appendChild(homeTeamScoreSpan);
 
                     let awayTeamDiv = document.createElement('div');
                     awayTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--away');
+
+                    // --- ΛΟΓΟΤΥΠΟ ΦΙΛΟΞΕΝΟΥΜΕΝΟΥ ---
+                    const awayLogoUrl = data.getFormattedValue(row, 54); // URL λογότυπου φιλοξενούμενου
+                    if (awayLogoUrl) {
+                        let awayLogoDiv = document.createElement('div');
+                        awayLogoDiv.classList.add('MatchListItem__teamLogo'); // Προσθέτουμε νέα κλάση για styling
+                        awayLogoDiv.style.backgroundImage = `url('${awayLogoUrl}')`;
+                        awayLogoDiv.style.width = '20px';  // Σταθερό πλάτος
+                        awayLogoDiv.style.height = '20px'; // Σταθερό ύψος
+                        awayLogoDiv.style.backgroundSize = 'contain';
+                        awayLogoDiv.style.backgroundRepeat = 'no-repeat';
+                        awayLogoDiv.style.backgroundPosition = 'center';
+                        awayLogoDiv.style.marginRight = '8px'; // Απόσταση από το όνομα της ομάδας
+                        awayTeamDiv.appendChild(awayLogoDiv); // Προσθέτουμε το λογότυπο πριν το όνομα
+                    }
 
                     let awayTeamNameSpan = document.createElement('span');
                     awayTeamNameSpan.classList.add('MatchListItem__teamName');
@@ -274,12 +306,29 @@
                     }
                     parentElement.appendChild(iDivAgvnas);
 
-                    // --- Ομάδες και Σκορ Αγώνα ---
+                // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---
                     let matchContentDiv = document.createElement('div');
                     matchContentDiv.classList.add('MatchListItem__content');
 
                     let homeTeamDiv = document.createElement('div');
                     homeTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home');
+
+                    // --- ΛΟΓΟΤΥΠΟ ΓΗΠΕΔΟΥΧΟΥ ---
+                    const homeLogoUrl = data.getFormattedValue(row, 53); // URL λογότυπου γηπεδούχου
+                    if (homeLogoUrl) {
+                        let homeLogoDiv = document.createElement('div');
+                        homeLogoDiv.classList.add('MatchListItem__teamLogo'); // Προσθέτουμε νέα κλάση για styling
+                        homeLogoDiv.style.backgroundImage = `url('${homeLogoUrl}')`;
+                        // Προσθέτουμε στυλ για να διασφαλίσουμε ότι το λογότυπο εμφανίζεται σωστά
+                        // Μπορείτε να ρυθμίσετε το μέγεθος (π.χ. 20px) ανάλογα με το ύψος της γραμματοσειράς
+                        homeLogoDiv.style.width = '20px';  // Σταθερό πλάτος
+                        homeLogoDiv.style.height = '20px'; // Σταθερό ύψος, ίσο με το ύψος της γραμματοσειράς
+                        homeLogoDiv.style.backgroundSize = 'contain'; // Το λογότυπο θα χωράει μέσα στο div
+                        homeLogoDiv.style.backgroundRepeat = 'no-repeat'; // Όχι επανάληψη εικόνας
+                        homeLogoDiv.style.backgroundPosition = 'center'; // Κεντράρισμα εικόνας
+                        homeLogoDiv.style.marginRight = '8px'; // Απόσταση από το όνομα της ομάδας
+                        homeTeamDiv.appendChild(homeLogoDiv); // Προσθέτουμε το λογότυπο πριν το όνομα
+                    }
 
                     let homeTeamNameSpan = document.createElement('span');
                     homeTeamNameSpan.classList.add('MatchListItem__teamName');
@@ -287,8 +336,8 @@
 
                     let homeTeamScoreSpan = document.createElement('span');
                     homeTeamScoreSpan.classList.add('MatchListItem__teamScore');
-                    const homeScore = parseFloat(data.getFormattedValue(row, 8));
-                    homeTeamScoreSpan.textContent = isNaN(homeScore) ? '' : homeScore;
+                    const homeScore = parseFloat(data.getFormattedValue(row, 8)); // Μετατροπή σε αριθμό
+                    homeTeamScoreSpan.textContent = isNaN(homeScore) ? '-' : homeScore; // Εμφάνιση παύλας αν δεν είναι αριθμός
 
                     homeTeamDiv.appendChild(homeTeamNameSpan);
                     homeTeamDiv.appendChild(homeTeamScoreSpan);
@@ -296,14 +345,29 @@
                     let awayTeamDiv = document.createElement('div');
                     awayTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--away');
 
+                    // --- ΛΟΓΟΤΥΠΟ ΦΙΛΟΞΕΝΟΥΜΕΝΟΥ ---
+                    const awayLogoUrl = data.getFormattedValue(row, 54); // URL λογότυπου φιλοξενούμενου
+                    if (awayLogoUrl) {
+                        let awayLogoDiv = document.createElement('div');
+                        awayLogoDiv.classList.add('MatchListItem__teamLogo'); // Προσθέτουμε νέα κλάση για styling
+                        awayLogoDiv.style.backgroundImage = `url('${awayLogoUrl}')`;
+                        awayLogoDiv.style.width = '20px';  // Σταθερό πλάτος
+                        awayLogoDiv.style.height = '20px'; // Σταθερό ύψος
+                        awayLogoDiv.style.backgroundSize = 'contain';
+                        awayLogoDiv.style.backgroundRepeat = 'no-repeat';
+                        awayLogoDiv.style.backgroundPosition = 'center';
+                        awayLogoDiv.style.marginRight = '8px'; // Απόσταση από το όνομα της ομάδας
+                        awayTeamDiv.appendChild(awayLogoDiv); // Προσθέτουμε το λογότυπο πριν το όνομα
+                    }
+
                     let awayTeamNameSpan = document.createElement('span');
                     awayTeamNameSpan.classList.add('MatchListItem__teamName');
                     awayTeamNameSpan.textContent = data.getFormattedValue(row, 7);
 
                     let awayTeamScoreSpan = document.createElement('span');
                     awayTeamScoreSpan.classList.add('MatchListItem__teamScore');
-                    const awayScore = parseFloat(data.getFormattedValue(row, 9));
-                    awayTeamScoreSpan.textContent = isNaN(awayScore) ? '' : awayScore;
+                    const awayScore = parseFloat(data.getFormattedValue(row, 9)); // Μετατροπή σε αριθμό
+                    awayTeamScoreSpan.textContent = isNaN(awayScore) ? '' : awayScore; // Εμφάνιση κενού αν δεν είναι αριθμός
 
                     awayTeamDiv.appendChild(awayTeamNameSpan);
                     awayTeamDiv.appendChild(awayTeamScoreSpan);
