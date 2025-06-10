@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Πρόγραμμα ΕΚΑΣΘ</title>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:100,300" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap" rel="stylesheet" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" rel="stylesheet" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous" />
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+		// Load the Visualization API and the piechart package.
+		google.charts.load('current', {'packages':['corechart']});
+
+		// Set a callback to run when the Google Visualization API is loaded.
+		google.charts.setOnLoadCallback(drawchart);	
+
+
+
+        function drawchart(){						
+
+            //--- jummpotron
+            //---- stoyw orismo;y den ;exoyme ;ena sygkekrimeno prvtaulhma
+            //---- mia kai oi orismoi aforoyn ola ta prvtaulhmata -- kai pernei data apo to big query
+            //---- oysiastik;a ap;o ta gamecenter1 -- > phda;ie to epipedo 2 kai erxetai sto teliko arxeio
+         //   document.getElementById("diorganvsh-title").innerHTML = '<b>Πρόγραμμα, ορισμοί αγώνων</b>' ;
+         //   document.getElementById("diorganvsh-sub-title").innerHTML = decodeURIComponent(getQueryVariable("pNamePrvtathlhmatos"));
+
+        //    emploutiseMenuApoPerametrous();  
+
+        drawDiorganvseis();
+
+        };
+
+        function drawDiorganvseis(){
+    		var queryString; 
+    		var strQueryForURI;
+
+			// strQueryForURI = 'select * order by D,A,E';
+            // 1. Πάρε τη σημερινή ημερομηνία
+            const today = new Date();
+            // 2. Μορφοποίησε τη σημερινή ημερομηνία σε yyyy-MM-dd
+            // Προσθήκη μηδενικών μπροστά για μήνα και ημέρα αν είναι μονοψήφια (π.χ. 01, 02)
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0'); // getMonth() είναι 0-indexed, οπότε +1
+            const day = String(today.getDate()).padStart(2, '0');
+
+            const formattedDate = `${year}-${month}-${day}`; // Παράδειγμα: "2025-06-10"
+            // 3. Δημιούργησε τη συμβολοσειρά του QUERY
+            // Σημείωση: Χρησιμοποιούμε backticks (`` ` ``) για template literals για ευκολότερη συνένωση
+            strQueryForURI = `select * where D = date '${formattedDate}' order by D,B,A,E`;
+
+            console.log(strQueryForURI);
+
+
+
+
+
+			queryString = encodeURIComponent(strQueryForURI);
+      		//var query = new google.visualization.Query( 'https://docs.google.com/spreadsheets/d/'+getQueryVariable("pPowerPrvtathlhmatos") +'/gviz/tq?gid=6&headers=1&tq=' + queryString);
+              var query = new google.visualization.Query( 'https://docs.google.com/spreadsheets/d/17qZ43Fd2oYEV_lESKjOrqIOMurNDg5prJkyFuUH4aJA/gviz/tq?gid=6&headers=1&tq=' + queryString);
+
+
+      		query.send(handle_DrawDiorganvseis_DataQueryResponse);      		
+
+        }
+	    function handle_DrawDiorganvseis_DataQueryResponse(response) {
+	    	
+            if (response.isError()) {
+              alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+              return;
+            }
+            var data = response.getDataTable();
+            var posesEggrafes = data.getNumberOfRows();
+            var html=[];
+
+            var curDate="";
+            var curOmilosKathgoria ="";
+            var curAgvnistikh ="";
+
+               //--- arxeio shmainei oti exei pareluei h hmeromhnia
+               //--- ara tha emfanisthei sto alla tab toy arxeioy
+            var isArxeio = true;
+  
+               // Καταργεί το loader spin
+            //   document.getElementById("list-diorganvsevn-id").innerHTML = "";
+    
+              curAgvnistikh="999";
+              isAnoixtoTable_HDH=0;
+              
+              
+              console.log(`posesEggrafes ${posesEggrafes}`);
+              for (var row=0; row < posesEggrafes; row++){
+                console.log(`row ${row}`);
+
+                  /* --- tsek an h hmeromhnia einai kenh s
+                          hmainei o agvnas den exei oristhei na bazei mh orismenoi agvnes
+                  */
+                /*
+                                if(curAgvnistikh != data.getFormattedValue(row, 3) ){
+                                    curAgvnistikh = data.getFormattedValue(row, 3);
+                                    parentIID="nav-orismoi";
+                                    if( isGiaArxeio(data.getFormattedValue(row, 3)) ){
+                                        parentIID="nav-arxeio-orismvn";	
+                                    }
+                                    if( data.getFormattedValue(row, 3) =='' ){
+                                        parentIID="nav-xvris-hmeromhnia-agvnes";
+                                    }
+                                    ftiaxe_Agvnistikes_CollapseStyle(row, ftiaxeHemromhniaXvrisKethetes(curAgvnistikh),data, parentIID);
+                                }
+                */  
+                //---- STOIXEIA ths kathgorias - omioy poy anhkei o agvnaw
+                                             
+                if(curOmilosKathgoria !== data.getFormattedValue(row, 0) ){
+                    curOmilosKathgoria = data.getFormattedValue(row, 0);
+
+                    // 1. Βρες το γονικό στοιχείο με την ID 'pills-prg-container-id'
+                    var parentElement = document.getElementById('pills-prg-container-id');
+                    // 2. Δημιουργια του νέου ελεμεντ
+                    var iDiv = document.createElement('div');
+                    iDiv.id = 'omilos-kathgoras-div-' + row;
+                    iDiv.innerHTML = '<div class="col">'+data.getFormattedValue(row, 0)+'</div>';
+                    iDiv.className ='row MatchcenterHomepageOmilos__header';
+
+                    // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
+                    if (parentElement) { // Είναι καλή πρακτική να ελέγχεις αν το γονικό στοιχείο υπάρχει
+                        parentElement.appendChild(iDiv);
+                    } else {
+                        console.error("Το γονικό στοιχείο με ID 'pills-prg-container-id' δεν βρέθηκε.");
+                    }                    
+                }
+
+                //---- STOIXEIA ths αγωνιστική - omiλoy poy anhkei o agvnaw πρωτη εμφανιση (today σημερα)
+
+                if(curAgvnistikh != data.getFormattedValue(row, 1) ){
+                    curAgvnistikh = data.getFormattedValue(row, 1);
+
+                    // 1. Βρες το γονικό στοιχείο με την ID 'pills-prg-container-id'
+                    var parentElement = document.getElementById('pills-prg-container-id');
+                    // 2. Δημιουργια του νέου ελεμεντ
+                    var iDiv = document.createElement('div');
+                    iDiv.id = 'agvnistikh-omiloy-div-' + row;
+                    iDiv.innerHTML = '<div class="col"> ΑΓΩΝΙΣΤΙΚΗ : '+data.getFormattedValue(row, 1)+'</div>';
+                    iDiv.className ='row MatchList__subtitle';
+
+                    // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
+                    if (parentElement) { // Είναι καλή πρακτική να ελέγχεις αν το γονικό στοιχείο υπάρχει
+                        parentElement.appendChild(iDiv);
+                    } else {
+                        console.error("Το γονικό στοιχείο με ID 'pills-prg-container-id' δεν βρέθηκε.");
+                    }                    
+                }
+
+
+                ///---------- AGVNAS
+
+                // Για την πρώτη στήλη υπολογίζουμε πρώτα την μορφή της ημερομηνίας
+
+                // Αν το data.getValue(row, 3) επιστρέφει αντικείμενο Date (προτιμότερο)
+                const dateObject = data.getValue(row, 3);
+
+                // Ελέγχουμε αν το αντικείμενο ημερομηνίας είναι έγκυρο (αφού μπορεί να είναι null αν το κελί είναι κενό)
+                if (!dateObject || isNaN(dateObject.getTime())) {
+                    console.error("Το κελί δεν περιέχει έγκυρη ημερομηνία.");
+                    return "N/A"; // Επιστρέφουμε ένα μήνυμα ή κενό
+                }
+
+                const greekMonthsAbbr = [
+                    "ΙΑΝ", "ΦΕΒ", "ΜΑΡ", "ΑΠΡ", "ΜΑΪ", "ΙΟΥΝ",
+                    "ΙΟΥΛ", "ΑΥΓ", "ΣΕΠ", "ΟΚΤ", "ΝΟΕ", "ΔΕΚ"
+                ];
+
+                const day = dateObject.getDate();
+                const monthAbbr = greekMonthsAbbr[dateObject.getMonth()];
+                const formattedDate = `${day} ${monthAbbr}`;
+                // Τέλος υπολογισμός -- μορφή της ημερομηνίας
+
+
+                // 1. Βρες το γονικό στοιχείο με την ID 'pills-prg-container-id'
+                var parentElement = document.getElementById('pills-prg-container-id');
+               // 2. Δημιουργία του νέου element
+                var iDiv = document.createElement('div');
+                iDiv.id = 'agvnas-div-' + row;
+                iDiv.className = 'row MatchListItem__wrapper MatchList__match';
+
+                // Λήψη των τιμών για τους ελέγχους
+                var teamAValue = data.getFormattedValue(row, 6); //  'ομάδα Α'  
+                var teamBValue = data.getFormattedValue(row, 7); //   'ομάδα Β'  
+                var statusValue = data.getFormattedValue(row, 2); // Η τιμή που ελέγχουμε για "ΤΕΛΙΚΟ" ή "ΑΑ"
+
+                // Εφαρμογή των συνθηκών
+                if (teamAValue === "-" || teamBValue === "-") {
+                    // Αν υπάρχει "-" σε μία από τις δύο ομάδες (υποθέτουμε ΡΕΠΟ)
+                    iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time">Ρ Ε Π Ο </span></div>';
+                } else if (statusValue === "ΤΕΛΙΚΟ") {
+                    // Αν η κατάσταση είναι "ΤΕΛΙΚΟ"
+                    iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> ΤΕΛΙΚΟ </span> </div>';
+                } else if (statusValue === "ΑΑ") {
+                    // Αν η κατάσταση είναι "ΑΑ"
+                    iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> ΑΑ </span> </div>';
+                } else {
+                    // Στις υπόλοιπες περιπτώσεις, η αρχική μορφή
+                    iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time"> ' + data.getFormattedValue(row, 4) + '</span></div>';
+                }
+
+                // Προσθήκη του νέου στοιχείου στο γονικό
+                if (parentElement) {
+                    parentElement.appendChild(iDiv);
+                } else {
+                    console.error("Το γονικό στοιχείο με ID 'pills-prg-container-id' δεν βρέθηκε.");
+                }                                 
+
+                //------ ΟΜΑΔΕΣ και ΣΚΟΡ αγώνα
+                 var parentElement = document.getElementById('agvnas-div-' + row);
+
+                if (parentElement) {
+                  // Δημιουργία των στοιχείων
+                  var matchContentDiv = document.createElement('div');
+                  matchContentDiv.classList.add('MatchListItem__content');
+
+                  var homeTeamDiv = document.createElement('div');
+                  homeTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home');
+
+                  var homeTeamNameSpan = document.createElement('span');
+                  homeTeamNameSpan.classList.add('MatchListItem__teamName');
+                  homeTeamNameSpan.textContent = data.getFormattedValue(row, 6);
+
+                  var homeTeamScoreSpan = document.createElement('span');
+                  homeTeamScoreSpan.classList.add('MatchListItem__teamScore');
+                  var homeScore = data.getFormattedValue(row, 8); // σκορ α
+                  homeTeamScoreSpan.textContent = homeScore;
+
+                  var awayTeamDiv = document.createElement('div');
+                  awayTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--away');
+
+                  var awayTeamNameSpan = document.createElement('span');
+                  awayTeamNameSpan.classList.add('MatchListItem__teamName');
+                  awayTeamNameSpan.textContent = data.getFormattedValue(row, 7);
+
+                  var awayTeamScoreSpan = document.createElement('span');
+                  awayTeamScoreSpan.classList.add('MatchListItem__teamScore');
+                  var awayScore = data.getFormattedValue(row, 9); //  σκορ Β
+                  awayTeamScoreSpan.textContent = awayScore;
+
+                  // Προσθήκη των στοιχείων στο DOM
+                  homeTeamDiv.appendChild(homeTeamNameSpan);
+                  homeTeamDiv.appendChild(homeTeamScoreSpan);
+
+                  awayTeamDiv.appendChild(awayTeamNameSpan);
+                  awayTeamDiv.appendChild(awayTeamScoreSpan);
+
+                  matchContentDiv.appendChild(homeTeamDiv);
+                  matchContentDiv.appendChild(awayTeamDiv);
+
+                  // Έλεγχος νικητή και προσθήκη της κλάσης "MatchListItem__team--winning"
+                  if ( parseFloat(homeScore) > parseFloat(awayScore) )  {
+                    homeTeamDiv.classList.add('MatchListItem__team--winning');
+                  } else if (parseFloat(awayScore) > parseFloat(homeScore) ) {
+                    awayTeamDiv.classList.add('MatchListItem__team--winning');
+                  }
+
+                  // Προσθήκη ολόκληρης της δομής στο parentElement
+                  parentElement.appendChild(matchContentDiv);
+                } else {
+                  console.error("Το στοιχείο με id 'agvnas-div-" + row+"' δεν βρέθηκε.");
+                }
+
+
+
+
+
+
+
+
+
+                /*
+                ftiaxe_rows_agvnvn_kai_bale_mesa_se_antitoixh_agvnistikh(row,ftiaxeHemromhniaXvrisKethetes(curAgvnistikh),data);
+                */            
+  
+              } //-- END loop s' oles tiw eggrafes
+
+
+
+
+
+
+                //---  emploutiseMenuAtomvn();
+              // krybei oloyw toyw orismoyw ana atoma (etsi prepei)
+               //$(".cl-diaithtes-krites").hide();  
+               //$("#poios-exei-epilegei-gia-emfanish").hide();
+  
+           }   //--- END of function handle_DrawDiorganvseis_DataQueryResponse(response)
+           
+           
+
+    </script>
+
+    <style>
+         .MatchcenterHomepageWidget__header{
+            color: #0f253a;
+            font: 400 2.5em / 1 Mansalva, Helvetica, Arial, sans-serif;
+            letter-spacing: .12em;
+            text-align: center;
+            padding: 12px 0;
+            margin-bottom: 15px;
+            border-bottom: 5px solid #ff0040;
+        }    
+        .MatchcenterHomepageOmilos__header{
+            background-color: #e2e4e6;          
+            color: #003e5e;
+            font-size: 13px;   
+            font-weight: bold;                     
+            letter-spacing: .05em;
+            padding: 5px 20px;            
+            text-transform: uppercase;
+            text-align: center;
+            user-select: none;
+        }                 
+        .MatchList__subtitle{
+            border-bottom: 1px solid #e2e4e6;
+            color: #003e5e;
+            font-size: 13px;
+            letter-spacing: .05em;
+            text-align: center;
+            text-transform: uppercase;            
+            padding: 6px 20px;
+            user-select: none;
+        }    
+        .MatchListItem{
+
+        }
+        .MatchList__match {
+          min-height: 58px;
+        }
+        .MatchListItem__wrapper {
+            border-bottom: 1px solid #e2e4e6;
+            display: flex;
+            align-items: stretch;
+            justify-content: flex-start;
+            padding: 10px 0;
+            text-decoration: none;
+        }        
+        .MatchListItem__header {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 65px;
+            flex: 0 0 65px;
+            padding: 0 5px 0 0;
+            border-right: 1px solid #e2e4e6;
+        } 
+        .MatchListItem__date {
+            color: #003e5e;
+            font-size: 12px;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 1.4;             
+        }                   
+        .MatchListItem__time, .MatchListItem__year {
+            color: #003e5e;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 0.8;            
+        }
+        
+        /* --- ΟΜΑΔΕΣ ΑΓΩΝΑ -- */
+        .MatchListItem__content {
+            flex: 1;
+        }        
+        .MatchListItem__team {
+            display: flex;
+            padding: 0 15px;
+        }        
+        .MatchListItem__team--home{
+            margin-bottom: 10px;
+        }         
+        .MatchListItem__team--away{ 
+            margin-bottom: 0px;
+       
+        }
+        .MatchListItem__teamName{
+            margin-right: auto
+        }
+        .MatchListItem__teamName,
+        .MatchListItem__teamScore{
+            color: #003e5e;
+            font-size:  12px;
+            font-weight: 400;
+            letter-spacing: .04em;
+        }
+        .MatchListItem__teamScore {
+            min-width: 1ch;
+            text-align: center
+        }
+        .MatchListItem__team--winning .MatchListItem__teamName,
+        .MatchListItem__team--winning .MatchListItem__teamScore {
+            font-weight: 700
+        }
+
+        
+
+
+    </style>
+
+  </head>
+  <body>
+
+
+    <div class="MatchCenterWidgetContainer">
+        <div class="MatchcenterWidget MatchcenterWidget--hp" id="matchcenter-homepage-widget" data-matchcenter-homepage-group="" data-matchcenter-homepage-b-group="">
+            <section class="MatchcenterHomepageWidget">
+                <h3 class="MatchcenterHomepageWidget__header">
+                    <!-- a href="/matchcenter/" -->
+                    MATCH<small class="text-body-secondary">CENTER</small>
+                    <!-- a -->
+                </h3>
+
+                <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="pills-prg-tab" data-bs-toggle="pill" data-bs-target="#pills-prg" type="button" role="tab" aria-controls="pills-prg" aria-selected="true">ΑΓΩΝΕΣ</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="pills-orismoi-tab" data-bs-toggle="pill" data-bs-target="#pills-orismoi" type="button" role="tab" aria-controls="pills-orismoi" aria-selected="false">ΟΡΙΣΜΟΙ</button>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-prg" role="tabpanel" aria-labelledby="pills-prg-tab" tabindex="0">
+                        <div class="container text-center" id="pills-prg-container-id">
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-orismoi" role="tabpanel" aria-labelledby="pills-orismoi-tab" tabindex="0">
+                        <div class="container text-center" id="pills-orismoi-container-id">
+                        </div>
+                    </div>
+                  </div>                
+
+
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+  </body>
+  </html>
