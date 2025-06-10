@@ -232,7 +232,7 @@
 
                   var homeTeamScoreSpan = document.createElement('span');
                   homeTeamScoreSpan.classList.add('MatchListItem__teamScore');
-                  var homeScore = data.getFormattedValue(row, 8); // Προσωρινή τιμή, αντικαταστήστε με το πραγματικό σκορ
+                  var homeScore = data.getFormattedValue(row, 8); // σκορ α
                   homeTeamScoreSpan.textContent = homeScore;
 
                   var awayTeamDiv = document.createElement('div');
@@ -244,7 +244,7 @@
 
                   var awayTeamScoreSpan = document.createElement('span');
                   awayTeamScoreSpan.classList.add('MatchListItem__teamScore');
-                  var awayScore = data.getFormattedValue(row, 9); // Προσωρινή τιμή, αντικαταστήστε με το πραγματικό σκορ
+                  var awayScore = data.getFormattedValue(row, 9); //  σκορ Β
                   awayTeamScoreSpan.textContent = awayScore;
 
                   // Προσθήκη των στοιχείων στο DOM
@@ -258,9 +258,9 @@
                   matchContentDiv.appendChild(awayTeamDiv);
 
                   // Έλεγχος νικητή και προσθήκη της κλάσης "MatchListItem__team--winning"
-                  if (homeScore > awayScore) {
+                  if ( parseFloat(homeScore) > parseFloat(awayScore) )  {
                     homeTeamDiv.classList.add('MatchListItem__team--winning');
-                  } else if (awayScore > homeScore) {
+                  } else if (parseFloat(awayScore) > parseFloat(homeScore) ) {
                     awayTeamDiv.classList.add('MatchListItem__team--winning');
                   }
 
