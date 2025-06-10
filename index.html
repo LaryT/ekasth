@@ -357,7 +357,7 @@
                     if (!diaititis1 && !diaititis2 && !diaititis3) {
                         let li = document.createElement('li');
                         //-- li.textContent = "Δεν έχουν οριστεί"΄
-                        li.innerHTML = "<i class='fal fa-users-slash fa-xs'></i>";
+                        li.innerHTML = " &empty;";
                         diaititesList.appendChild(li);
                     }
                     diaititesCol.appendChild(diaititesList); // Append diaititesList to its column
@@ -381,7 +381,7 @@
                     } else {
                         let pKomisarios = document.createElement('p');
                         pKomisarios.classList.add('MatchListItem__single-value');
-                        pKomisarios.innerHTML = "<i class='fal fa-users-slash fa-xs'></i>";
+                        pKomisarios.innerHTML = "&empty;";
                         //-- pKomisarios.textContent = "Δεν έχει οριστεί";
                         komisariosCol.appendChild(pKomisarios);
                     }
@@ -422,7 +422,7 @@
                     if (!kritis1 && !kritis2 && !kritis3) {
                         let li = document.createElement('li');
                         // li.textContent = "Δεν έχουν οριστεί";
-                        li.innerHTML = "<i class='fal fa-users-slash fa-xs'></i>";
+                        li.innerHTML = "&empty;>";
 
                         kritesList.appendChild(li);
                     }
