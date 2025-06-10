@@ -197,7 +197,7 @@
                 }                                    
 
                 //------ ΟΜΑΔΕΣ και ΣΚΟΡ αγώνα
-                 var parentElement = document.getElementById('pills-prg-container-id');
+                 var parentElement = document.getElementById('agvnas-div-' + row);
 
                 if (parentElement) {
                   // Δημιουργία των στοιχείων
@@ -248,7 +248,7 @@
                   // Προσθήκη ολόκληρης της δομής στο parentElement
                   parentElement.appendChild(matchContentDiv);
                 } else {
-                  console.error("Το στοιχείο με id 'pills-prg-container-id' δεν βρέθηκε.");
+                  console.error("Το στοιχείο με id 'agvnas-div-" + row+"' δεν βρέθηκε.");
                 }
 
 
