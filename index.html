@@ -43,7 +43,7 @@
             // 3. Δημιούργησε τη συμβολοσειρά του QUERY
             strQueryForURI = `select * where D = date '${formattedDate}' order by D,B,A,E`;
 
-            console.log(strQueryForURI);
+            //--- console.log(strQueryForURI);
 
             queryString = encodeURIComponent(strQueryForURI);
             // Replace with your actual Google Sheet ID
@@ -60,7 +60,7 @@
             }
             data = response.getDataTable(); // Assign to global 'data'
             posesEggrafes = data.getNumberOfRows(); // Assign to global 'posesEggrafes'
-            console.log('handle_DrawDiorganvseis_DataQueryResponse posesEggrafes :' +posesEggrafes);
+            //--- console.log('handle_DrawDiorganvseis_DataQueryResponse posesEggrafes :' +posesEggrafes);
 
             // Global variables for tab state (moved here from inside functions)
             let curOmilosKathgoria_prg = "";
@@ -92,7 +92,7 @@
                 curOmilosKathgoria_prg = "";
                 curAgvnistikh_prg = "";
 
-                console.log( 'in renderMatches, posesEggrafes = ' + posesEggrafes);
+                //--- console.log( 'in renderMatches, posesEggrafes = ' + posesEggrafes);
                 for (let row = 0; row < posesEggrafes; row++) {
                      console.log(`renderMatches() ->  row ${row}`);
 
