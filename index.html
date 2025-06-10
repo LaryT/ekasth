@@ -536,7 +536,18 @@
                 if (document.querySelector('#pills-prg.show.active')) {
                     renderMatches('pills-prg-container-id');
                 }
-                renderMatches('pills-prg-container-id');
+
+                // 1. Get a reference to the button element
+                const matchesButton = document.getElementById('pills-prg-tab');
+
+                // 2. Check if the button exists to prevent errors
+                if (matchesButton) {
+                    // 3. Simulate the click
+                    matchesButton.click();
+                    console.log('Simulated click on "ΑΓΩΝΕΣ" button.');
+                } else {
+                    console.warn('Button with ID "pills-prg-tab" not found.');
+                }
 
                 
         });
