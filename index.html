@@ -290,6 +290,15 @@
                         formattedDate = `${day} ${monthAbbr}`;
                     }
 
+
+                    //---- ΚΕΛΥΦΟΣ a tag
+                    let iAhref = document.createElement('a');  
+                    iAhref.id = 'a-ref'+ row;  
+                    parentElement.appendChild(iAhref);      
+
+
+
+
                     let iDivAgvnas = document.createElement('div');
                     iDivAgvnas.id = 'agvnas-orismoi-div-' + row;
                     iDivAgvnas.className = 'row MatchListItem__wrapper MatchList__match';
@@ -308,7 +317,14 @@
                     } else {
                         iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time"> ' + data.getFormattedValue(row, 4) + '</span></div>';
                     }
-                    parentElement.appendChild(iDivAgvnas);
+                   // parentElement.appendChild(iDivAgvnas);
+
+                    //---- prosuhkh sto kelefyos ΚΕΛΥΦΟΣ a tag
+                   iAhref.appendChild(iDivAgvnas);
+
+
+
+
 
                 // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---
                     let matchContentDiv = document.createElement('div');
