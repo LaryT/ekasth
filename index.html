@@ -182,6 +182,7 @@
 
                 console.log(formattedDate);
 
+                // Τέλος υπολογισμός -- μορφή της ημερομηνίας
 
 
                 // 1. Βρες το γονικό στοιχείο με την ID 'pills-prg-container-id'
@@ -190,7 +191,7 @@
                 var iDiv = document.createElement('div');
                 iDiv.id = 'agvnas-div-' + row;
                 iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">'+formattedDate+'</span> <span class="MatchListItem__time"> '+data.getFormattedValue(row, 4)+'</span></div>';
-                iDiv.className ='row';
+                iDiv.className ='row MatchListItem__wrapper';
 
                 // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
                 if (parentElement) { // Είναι καλή πρακτική να ελέγχεις αν το γονικό στοιχείο υπάρχει
@@ -247,6 +248,20 @@
             border-bottom: 1px solid #e2e4e6;
             user-select: none;
         }    
+        .MatchListItem{
+
+        }
+        .MatchList__match {
+          min-height: 58px;
+        }
+        .MatchListItem__wrapper {
+            border-bottom: 1px solid #e2e4e6;
+            display: flex;
+            align-items: stretch;
+            justify-content: flex-start;
+            padding: 10px 0;
+            text-decoration: none;
+        }        
         .MatchListItem__header {
             display: flex;
             flex-flow: column;
