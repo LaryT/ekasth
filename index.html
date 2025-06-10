@@ -183,18 +183,37 @@
 
                 // 1. Βρες το γονικό στοιχείο με την ID 'pills-prg-container-id'
                 var parentElement = document.getElementById('pills-prg-container-id');
-                // 2. Δημιουργια του νέου ελεμεντ
+               // 2. Δημιουργία του νέου element
                 var iDiv = document.createElement('div');
                 iDiv.id = 'agvnas-div-' + row;
-                iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">'+formattedDate+'</span> <span class="MatchListItem__time"> '+data.getFormattedValue(row, 4)+'</span></div>';
-                iDiv.className ='row MatchListItem__wrapper MatchList__match';
+                iDiv.className = 'row MatchListItem__wrapper MatchList__match';
 
-                // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
-                if (parentElement) { // Είναι καλή πρακτική να ελέγχεις αν το γονικό στοιχείο υπάρχει
+                // Λήψη των τιμών για τους ελέγχους
+                var teamAValue = data.getFormattedValue(row, 'ομάδα Α'); // Αντικαταστήστε 'ομάδα Α' με το σωστό index/όνομα στήλης
+                var teamBValue = data.getFormattedValue(row, 'ομάδα Β'); // Αντικαταστήστε 'ομάδα Β' με το σωστό index/όνομα στήλης
+                var statusValue = data.getFormattedValue(row, 2); // Η τιμή που ελέγχουμε για "ΤΕΛΙΚΟ" ή "ΑΑ"
+
+                // Εφαρμογή των συνθηκών
+                if (teamAValue === "-" || teamBValue === "-") {
+                    // Αν υπάρχει "-" σε μία από τις δύο ομάδες (υποθέτουμε ΡΕΠΟ)
+                    iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time">Ρ Ε Π Ο </span></div>';
+                } else if (statusValue === "ΤΕΛΙΚΟ") {
+                    // Αν η κατάσταση είναι "ΤΕΛΙΚΟ"
+                    iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> ΤΕΛΙΚΟ </span> </div>';
+                } else if (statusValue === "ΑΑ") {
+                    // Αν η κατάσταση είναι "ΑΑ"
+                    iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> ΑΑ </span> </div>';
+                } else {
+                    // Στις υπόλοιπες περιπτώσεις, η αρχική μορφή
+                    iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time"> ' + data.getFormattedValue(row, 4) + '</span></div>';
+                }
+
+                // Προσθήκη του νέου στοιχείου στο γονικό
+                if (parentElement) {
                     parentElement.appendChild(iDiv);
                 } else {
                     console.error("Το γονικό στοιχείο με ID 'pills-prg-container-id' δεν βρέθηκε.");
-                }                                    
+                }                                 
 
                 //------ ΟΜΑΔΕΣ και ΣΚΟΡ αγώνα
                  var parentElement = document.getElementById('agvnas-div-' + row);
@@ -363,13 +382,15 @@
         .MatchListItem__team--home{
             margin-bottom: 10px;
         }         
-        .MatchListItem__team--away {        
+        .MatchListItem__team--away{ 
+            margin-bottom: 0px;
+       
         }
-        .MatchListItem__teamName {
+        .MatchListItem__teamName{
             margin-right: auto
         }
         .MatchListItem__teamName,
-        .MatchListItem__teamScore {
+        .MatchListItem__teamScore{
             color: #003e5e;
             font-size:  12px;
             font-weight: 400;
