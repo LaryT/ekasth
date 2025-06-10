@@ -21,34 +21,6 @@
 		google.charts.setOnLoadCallback(drawchart);	
 
 
-        // --- Event Listeners για τα Tabs ---
-            document.addEventListener('DOMContentLoaded', function() {
-                const pillsPrgTab = document.getElementById('pills-prg-tab');
-                const pillsOrismoiTab = document.getElementById('pills-orismoi-tab');
-
-                if (pillsPrgTab) {
-                    pillsPrgTab.addEventListener('shown.bs.tab', function (event) {
-                        // Καλέστε τη συνάρτηση για τους ΑΓΩΝΕΣ όταν επιλεγεί το tab
-                        renderMatches('pills-prg-container-id');
-                    });
-                }
-
-                if (pillsOrismoiTab) {
-                    pillsOrismoiTab.addEventListener('shown.bs.tab', function (event) {
-                        // Καλέστε τη συνάρτηση για τους ΟΡΙΣΜΟΥΣ όταν επιλεγεί το tab
-                        renderOrismoi('pills-orismoi-container-id');
-                    });
-                }
-
-                // Καλείται την πρώτη φορά που φορτώνεται η σελίδα για το ενεργό tab
-                // Βεβαιωθείτε ότι καλείται η σωστή συνάρτηση για το αρχικά ενεργό tab
-                // (Σε αυτό το HTML, το 'pills-prg' είναι το active tab)
-                if (document.querySelector('#pills-prg.show.active')) {
-                    renderMatches('pills-prg-container-id');
-                }
-            });
-
-        //---------------
 
 
 
@@ -112,7 +84,6 @@
             var posesEggrafes = data.getNumberOfRows();
             var html=[];
 
-            var curDate="";
             var curOmilosKathgoria ="";
             var curAgvnistikh ="";
 
@@ -126,11 +97,11 @@
              // Υποθέτουμε ότι 'data' και 'posesEggrafes' είναι παγκοσμίως διαθέσιμα ή περνιούνται ως ορίσματα.
             // Θα χρειαστεί να ορίσετε πού βρίσκονται τα 'curOmilosKathgoria' και 'curAgvnistikh'
             // συνήθως εκτός του βρόχου ή ως μέρος ενός ευρύτερου αντικειμένου διαχείρισης κατάστασης.
-            let curOmilosKathgoria_prg = null; // Για το tab 'ΑΓΩΝΕΣ'
-            let curAgvnistikh_prg = null;      // Για το tab 'ΑΓΩΝΕΣ'
+            let curOmilosKathgoria_prg = ""; // Για το tab 'ΑΓΩΝΕΣ'
+            let curAgvnistikh_prg = "";      // Για το tab 'ΑΓΩΝΕΣ'
 
-            let curOmilosKathgoria_orismoi = null; // Για το tab 'ΟΡΙΣΜΟΙ'
-            let curAgvnistikh_orismoi = null;      // Για το tab 'ΟΡΙΣΜΟΙ'
+            let curOmilosKathgoria_orismoi = ""; // Για το tab 'ΟΡΙΣΜΟΙ'
+            let curAgvnistikh_orismoi = "";      // Για το tab 'ΟΡΙΣΜΟΙ'
 
 
             // --- Συνάρτηση για τη δημιουργία αγώνων (για το tab 'ΑΓΩΝΕΣ') ---
@@ -144,8 +115,8 @@
                 parentElement.innerHTML = '';
 
                 // Επαναφέρουμε τις μεταβλητές κατάστασης για αυτό το tab
-                curOmilosKathgoria_prg = null;
-                curAgvnistikh_prg = null;
+                curOmilosKathgoria_prg = "";
+                curAgvnistikh_prg =  "";
 
                 for (let row = 0; row < posesEggrafes; row++) {
                     // console.log(`row ${row}`);
@@ -271,8 +242,8 @@
                 parentElement.innerHTML = '';
 
                 // Επαναφέρουμε τις μεταβλητές κατάστασης για αυτό το tab
-                curOmilosKathgoria_orismoi = null;
-                curAgvnistikh_orismoi = null;
+                curOmilosKathgoria_orismoi =  "";
+                curAgvnistikh_orismoi =  "";
 
                 for (let row = 0; row < posesEggrafes; row++) {
                     // console.log(`row ${row}`);
@@ -480,6 +451,44 @@
                     iDivAgvnas.appendChild(orismoiDetailsDiv);
                 }
             }
+
+
+
+            // --- Event Listeners για τα Tabs ---
+            document.addEventListener('DOMContentLoaded', function() {
+                const pillsPrgTab = document.getElementById('pills-prg-tab');
+                const pillsOrismoiTab = document.getElementById('pills-orismoi-tab');
+
+                if (pillsPrgTab) {
+                    pillsPrgTab.addEventListener('shown.bs.tab', function (event) {
+                        // Καλέστε τη συνάρτηση για τους ΑΓΩΝΕΣ όταν επιλεγεί το tab
+                        renderMatches('pills-prg-container-id');
+                    });
+                }
+
+                if (pillsOrismoiTab) {
+                    pillsOrismoiTab.addEventListener('shown.bs.tab', function (event) {
+                        // Καλέστε τη συνάρτηση για τους ΟΡΙΣΜΟΥΣ όταν επιλεγεί το tab
+                        renderOrismoi('pills-orismoi-container-id');
+                    });
+                }
+
+                // Καλείται την πρώτη φορά που φορτώνεται η σελίδα για το ενεργό tab
+                // Βεβαιωθείτε ότι καλείται η σωστή συνάρτηση για το αρχικά ενεργό tab
+                // (Σε αυτό το HTML, το 'pills-prg' είναι το active tab)
+                if (document.querySelector('#pills-prg.show.active')) {
+                    renderMatches('pills-prg-container-id');
+                }
+            });
+
+
+
+            //--------------- Event Listeners για τα Tabs
+
+
+
+
+
 
 
 
