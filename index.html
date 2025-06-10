@@ -26,6 +26,8 @@
 
         function drawchart() {
             drawDiorganvseis();
+            renderMatches('pills-prg-container-id');
+
         };
 
         function drawDiorganvseis() {
@@ -69,8 +71,13 @@
             let curAgvnistikh_orismoi = "";
 
 
-            // --- Συνάρτηση για τη δημιουργία αγώνων (για το tab 'ΑΓΩΝΕΣ') ---
-            function renderMatches(parentElementId) {
+            
+
+        }   //--- END of function handle_DrawDiorganvseis_DataQueryResponse(response)
+
+
+        // --- Συνάρτηση για τη δημιουργία αγώνων (για το tab 'ΑΓΩΝΕΣ') ---
+        function renderMatches(parentElementId) {
                 const parentElement = document.getElementById(parentElementId);
                 if (!parentElement) {
                     console.error(`Το γονικό στοιχείο με ID '${parentElementId}' δεν βρέθηκε.`);
@@ -187,11 +194,11 @@
                     }
                     iDivAgvnas.appendChild(matchContentDiv); // Προσθήκη στην αρχική δομή του αγώνα
                 }
-            }
+        }
 
 
-            // --- Συνάρτηση για τη δημιουργία αγώνων με ΟΡΙΣΜΟΥΣ (για το tab 'ΟΡΙΣΜΟΙ') ---
-            function renderOrismoi(parentElementId) {
+        // --- Συνάρτηση για τη δημιουργία αγώνων με ΟΡΙΣΜΟΥΣ (για το tab 'ΟΡΙΣΜΟΙ') ---
+        function renderOrismoi(parentElementId) {
                 const parentElement = document.getElementById(parentElementId);
                 if (!parentElement) {
                     console.error(`Το γονικό στοιχείο με ID '${parentElementId}' δεν βρέθηκε.`);
@@ -406,11 +413,14 @@
                     // Προσθήκη του νέου div ορισμών κάτω από το matchContentDiv
                     iDivAgvnas.appendChild(orismoiDetailsDiv);
                 }
-            }
+        }
 
 
-            // --- Event Listeners για τα Tabs ---
-            document.addEventListener('DOMContentLoaded', function () {
+        // --- Event Listeners για τα Tabs ---
+        document.addEventListener('DOMContentLoaded', function () {
+
+                alert("addEventListener");
+
                 const pillsPrgTab = document.getElementById('pills-prg-tab');
                 const pillsOrismoiTab = document.getElementById('pills-orismoi-tab');
 
@@ -431,9 +441,10 @@
                     alert("in arxiko trejimo  -->    renderMatches");
                     renderMatches('pills-prg-container-id');
                 }
-            });
+        });
+            
+            
 
-        }   //--- END of function handle_DrawDiorganvseis_DataQueryResponse(response)
 
     </script>
 
