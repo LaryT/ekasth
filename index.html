@@ -158,20 +158,46 @@
 
 
                 ///---------- AGVNAS
-                   // 1. Βρες το γονικό στοιχείο με την ID 'pills-prg-container-id'
-                   var parentElement = document.getElementById('pills-prg-container-id');
-                    // 2. Δημιουργια του νέου ελεμεντ
-                    var iDiv = document.createElement('div');
-                    iDiv.id = 'agvnas-div-' + row;
-                    iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">'+data.getFormattedValue(row, 3)+'</span> <span class="MatchListItem__time"> '+data.getFormattedValue(row, 4)+'</span></div>';
-                    iDiv.className ='row';
 
-                    // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
-                    if (parentElement) { // Είναι καλή πρακτική να ελέγχεις αν το γονικό στοιχείο υπάρχει
-                        parentElement.appendChild(iDiv);
-                    } else {
-                        console.error("Το γονικό στοιχείο με ID 'pills-prg-container-id' δεν βρέθηκε.");
-                    }                                    
+                // Για την πρώτη στήλη υπολογίζουμε πρώτα την μορφή της ημερομηνίας
+
+                // Αν το data.getValue(row, 3) επιστρέφει αντικείμενο Date (προτιμότερο)
+                const dateObject = data.getValue(row, 3);
+
+                // Ελέγχουμε αν το αντικείμενο ημερομηνίας είναι έγκυρο (αφού μπορεί να είναι null αν το κελί είναι κενό)
+                if (!dateObject || isNaN(dateObject.getTime())) {
+                    console.error("Το κελί δεν περιέχει έγκυρη ημερομηνία.");
+                    return "N/A"; // Επιστρέφουμε ένα μήνυμα ή κενό
+                }
+
+                const greekMonthsAbbr = [
+                    "ΙΑΝ", "ΦΕΒ", "ΜΑΡ", "ΑΠΡ", "ΜΑΪ", "ΙΟΥΝ",
+                    "ΙΟΥΛ", "ΑΥΓ", "ΣΕΠ", "ΟΚΤ", "ΝΟΕ", "ΔΕΚ"
+                ];
+
+                const day = dateObject.getDate();
+                const monthAbbr = greekMonthsAbbr[dateObject.getMonth()];
+
+                const formattedDate = `${day} ${monthAbbr}`;
+
+                console.log(formattedDate);
+
+
+
+                // 1. Βρες το γονικό στοιχείο με την ID 'pills-prg-container-id'
+                var parentElement = document.getElementById('pills-prg-container-id');
+                // 2. Δημιουργια του νέου ελεμεντ
+                var iDiv = document.createElement('div');
+                iDiv.id = 'agvnas-div-' + row;
+                iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">'+formattedDate+'</span> <span class="MatchListItem__time"> '+data.getFormattedValue(row, 4)+'</span></div>';
+                iDiv.className ='row';
+
+                // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
+                if (parentElement) { // Είναι καλή πρακτική να ελέγχεις αν το γονικό στοιχείο υπάρχει
+                    parentElement.appendChild(iDiv);
+                } else {
+                    console.error("Το γονικό στοιχείο με ID 'pills-prg-container-id' δεν βρέθηκε.");
+                }                                    
 
                 /*
                 ftiaxe_rows_agvnvn_kai_bale_mesa_se_antitoixh_agvnistikh(row,ftiaxeHemromhniaXvrisKethetes(curAgvnistikh),data);
@@ -235,16 +261,16 @@
         .MatchListItem__date {
             /*color: #fff;*/
             /* font: normal 11px / 1.27  Helvetica, Arial, sans-serif; */
-            letter-spacing: .04em;
+            letter-spacing: .06em;
             color: #003e5e;
-            letter-spacing: .01em;
             text-transform: uppercase;
             text-align: center;
         }                   
         .MatchListItem__time, .MatchListItem__year {
             /*color: #fff; */
             /* font: 700 12px / 1.16  Helvetica, Arial, sans-serif; */
-            letter-spacing: .04em;
+            font-weight: bold;
+            letter-spacing: .06em;
             color: #003e5e;
             text-align: center;
         }
