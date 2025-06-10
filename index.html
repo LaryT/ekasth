@@ -218,6 +218,7 @@
                     // metablhth gia to όταν υπάρχει ΡΕΠΟ σε μια ομάδα να μην εμφανίζονται οι διαιτητές - Κριτές κλπα
                     var isRepo=false;
 
+
                     // --- Στοιχεία Κατηγορίας/Ομίλου ---
                     if (curOmilosKathgoria_orismoi !== data.getFormattedValue(row, 0)) {
                         curOmilosKathgoria_orismoi = data.getFormattedValue(row, 0);
@@ -393,6 +394,7 @@
                         pKomisarios.innerHTML = "&empty;";
                         //-- pKomisarios.textContent = "Δεν έχει οριστεί";
                         komisariosCol.appendChild(pKomisarios);
+                        komisariosCol.classList.add('d-none');
                     }
                     orismoiRow.appendChild(komisariosCol); // Append komisariosCol to the row
 
