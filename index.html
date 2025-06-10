@@ -329,7 +329,7 @@
                     let orismoiRow = document.createElement('div');
                     orismoiRow.classList.add('row', 'g-3'); // 'g-3' adds some gutter spacing between columns
                     if(isRepo){
-                        orismoiRow.classList.add('d-none');
+                        orismoiRow.classList.add('d-none'); // κρυβει τους ορισμους σε περιπτωση ρεπό
                     }
 
                     // --- α. Διαιτητές (Column 1) ---
@@ -604,29 +604,29 @@
         /* --- Στυλ για την ενότητα Ορισμών --- */
         .MatchListItem__orismoi-details {
             flex: 1 0 100%; /* Take full width below main match content */
-            padding: 10px 15px 0 65px; /* Adjust padding to align with MatchListItem__content */
+            padding: 1px 15px 0 65px; /* Adjust padding to align with MatchListItem__content */
             border-top: 1px dashed #e2e4e6; /* Separator for clarity */
-            margin-top: 10px;
+            margin-top: 2px;
         }
 
         .MatchListItem__section-title {
             font-weight: bold;
             color: #003e5e;
             font-size: 11px;
-            margin-bottom: 5px;
+            margin-bottom: 1px;
             text-transform: uppercase;
         }
 
         .MatchListItem__list {
             list-style: none; /* Remove default bullet points */
             padding: 0;
-            margin: 0 0 10px 0;
+            margin: 0;
         }
 
         .MatchListItem__list li {
             font-size: 11px;
             color: #333;
-            line-height: 1.3;
+            line-height: 1.2;
         }
 
         .MatchListItem__single-value {
