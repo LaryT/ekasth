@@ -26,8 +26,6 @@
 
         function drawchart() {
             drawDiorganvseis();
-            renderMatches('pills-prg-container-id');
-
         };
 
         function drawDiorganvseis() {
@@ -62,7 +60,8 @@
             }
             data = response.getDataTable(); // Assign to global 'data'
             posesEggrafes = data.getNumberOfRows(); // Assign to global 'posesEggrafes'
-            console.log(posesEggrafes);
+            alert( ' I AM at ; handle_DrawDiorganvseis_DataQueryResponse');
+            console.log('handle_DrawDiorganvseis_DataQueryResponse posesEggrafes :' +posesEggrafes);
 
             // Global variables for tab state (moved here from inside functions)
             let curOmilosKathgoria_prg = "";
@@ -90,8 +89,9 @@
                 curOmilosKathgoria_prg = "";
                 curAgvnistikh_prg = "";
 
+                console.log( 'in renderMatches, posesEggrafes = ' + posesEggrafes);
                 for (let row = 0; row < posesEggrafes; row++) {
-                    // console.log(`row ${row}`);
+                     console.log(`renderMatches() ->  row ${row}`);
 
                     // --- Στοιχεία Κατηγορίας/Ομίλου ---
                     if (curOmilosKathgoria_prg !== data.getFormattedValue(row, 0)) {
