@@ -60,6 +60,7 @@
             }
             data = response.getDataTable(); // Assign to global 'data'
             posesEggrafes = data.getNumberOfRows(); // Assign to global 'posesEggrafes'
+            console.log(posesEggrafes);
 
             // Global variables for tab state (moved here from inside functions)
             let curOmilosKathgoria_prg = "";
@@ -427,6 +428,7 @@
 
                 // Initial render for the active tab when the data is loaded
                 if (document.querySelector('#pills-prg.show.active')) {
+                    alert("in arxiko trejimo  -->    renderMatches");
                     renderMatches('pills-prg-container-id');
                 }
             });
