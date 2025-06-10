@@ -145,7 +145,7 @@
                     // 2. Δημιουργια του νέου ελεμεντ
                     var iDiv = document.createElement('div');
                     iDiv.id = 'agvnistikh-omiloy-div-' + row;
-                    iDiv.innerHTML = '<div class="col"> ΑΓΩΝ : '+data.getFormattedValue(row, 1)+'</div>';
+                    iDiv.innerHTML = '<div class="col"> ΑΓΩΝΙΣΤΙΚΗ : '+data.getFormattedValue(row, 1)+'</div>';
                     iDiv.className ='row MatchList__subtitle';
 
                     // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
@@ -191,7 +191,7 @@
                 var iDiv = document.createElement('div');
                 iDiv.id = 'agvnas-div-' + row;
                 iDiv.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">'+formattedDate+'</span> <span class="MatchListItem__time"> '+data.getFormattedValue(row, 4)+'</span></div>';
-                iDiv.className ='row MatchListItem__wrapper';
+                iDiv.className ='row MatchListItem__wrapper MatchList__match';
 
                 // 3. Πρόσθεσε το iDiv στο γονικό στοιχείο
                 if (parentElement) { // Είναι καλή πρακτική να ελέγχεις αν το γονικό στοιχείο υπάρχει
@@ -238,14 +238,13 @@
             background-color: #e2e4e6;
         }                 
         .MatchList__subtitle{
-           /* color: #fff;*/
-            /* font: normal 1.1em / 1  'Fira Sans', Helvetica, Arial, sans-serif;*/
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            color: #003e5e;
-            text-align: center;
-            padding: 6px 20px;
             border-bottom: 1px solid #e2e4e6;
+            color: #003e5e;
+            font-size: 14px;
+            letter-spacing: .05em;
+            text-align: center;
+            text-transform: uppercase;            
+            padding: 6px 20px;
             user-select: none;
         }    
         .MatchListItem{
@@ -278,7 +277,7 @@
             font-size: 12px;
             text-transform: uppercase;
             text-align: center;
-            line-height: 1.1;             
+            line-height: 1.4;             
         }                   
         .MatchListItem__time, .MatchListItem__year {
             color: #003e5e;
@@ -305,7 +304,7 @@
 
                 <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link active" id="pills-prg-tab" data-bs-toggle="pill" data-bs-target="#pills-prg" type="button" role="tab" aria-controls="pills-prg" aria-selected="true">ΑΠΟΤΕΛΕΣΜΑΤΑ</button>
+                      <button class="nav-link active" id="pills-prg-tab" data-bs-toggle="pill" data-bs-target="#pills-prg" type="button" role="tab" aria-controls="pills-prg" aria-selected="true">ΑΓΩΝΕΣ</button>
                     </li>
                     <li class="nav-item" role="presentation">
                       <button class="nav-link" id="pills-orismoi-tab" data-bs-toggle="pill" data-bs-target="#pills-orismoi" type="button" role="tab" aria-controls="pills-orismoi" aria-selected="false">ΟΡΙΣΜΟΙ</button>
