@@ -123,7 +123,7 @@
                         iDivAgvnistikh.className = 'row MatchList__subtitle';
                         parentElement.appendChild(iDivAgvnistikh);
                     }
-
+/*
                     // --- Αγώνας ---
                     const dateObject = data.getValue(row, 3);
                     let formattedDate = "N/A";
@@ -155,7 +155,59 @@
                         iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time"> ' + data.getFormattedValue(row, 4) + '</span></div>';
                     }
                     parentElement.appendChild(iDivAgvnas);
+*/
 
+// --- Αγώνας ---
+                    const dateObject = data.getValue(row, 3);
+                    let formattedDate = "N/A";
+                    if (dateObject instanceof Date && !isNaN(dateObject.getTime())) { // Ensure it's a valid Date object
+                        const greekMonthsAbbr = [
+                            "ΙΑΝ", "ΦΕΒ", "ΜΑΡ", "ΑΠΡ", "ΜΑΪ", "ΙΟΥΝ",
+                            "ΙΟΥΛ", "ΑΥΓ", "ΣΕΠ", "ΟΚΤ", "ΝΟΕ", "ΔΕΚ"
+                        ];
+                        const day = dateObject.getDate();
+                        const monthAbbr = greekMonthsAbbr[dateObject.getMonth()];
+                        formattedDate = `${day} ${monthAbbr}`;
+                    }
+
+                    let iDivAgvnas = document.createElement('div');
+                    iDivAgvnas.id = 'agvnas-prg-div-' + row;
+                    iDivAgvnas.className = 'row MatchListItem__wrapper MatchList__match';
+
+                    const teamAValue = data.getFormattedValue(row, 6);
+                    const teamBValue = data.getFormattedValue(row, 7);
+                    const statusValue = data.getFormattedValue(row, 2);
+                    const venueValue = data.getFormattedValue(row, 5); // Παίρνουμε την τιμή του γηπέδου
+
+                    let headerHtml = '';
+                    if (teamAValue === "-" || teamBValue === "-") {
+                        headerHtml = '<div class="col MatchListItem__header">' +
+                                        '<span class="MatchListItem__date">Ρ Ε Π Ο</span>' +
+                                     '</div>';
+                    } else if (statusValue === "ΤΕΛΙΚΟ") {
+                        headerHtml = '<div class="col MatchListItem__header">' +
+                                        '<span class="MatchListItem__date">ΤΕΛΙΚΟ</span>' +
+                                     '</div>';
+                    } else if (statusValue === "ΑΑ") {
+                        headerHtml = '<div class="col MatchListItem__header">' +
+                                        '<span class="MatchListItem__date">Α.Α.</span>' + // Έβαλα Α.Α. για συνέπεια
+                                     '</div>';
+                    } else {
+                        // Κανονική εμφάνιση με ημερομηνία, ώρα και ΓΗΠΕΔΟ
+                        headerHtml = '<div class="col MatchListItem__header">' +
+                                        '<span class="MatchListItem__date">' + formattedDate + '</span> ' +
+                                        '<span class="MatchListItem__time">' + data.getFormattedValue(row, 4) + '</span>';
+
+                        // Προσθήκη του γηπέδου
+                        if (venueValue) {
+                            headerHtml += '<div class="MatchListItem__venue">' + venueValue + '</div>'; // Νέο div για το γήπεδο
+                        }
+                        headerHtml += '</div>';
+                    }
+
+                    iDivAgvnas.innerHTML = headerHtml; // Αναθέτουμε το δημιουργημένο HTML στο div του αγώνα
+                    parentElement.appendChild(iDivAgvnas);
+                    
                  // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---
                     let matchContentDiv = document.createElement('div');
                     matchContentDiv.classList.add('MatchListItem__content');
@@ -691,6 +743,7 @@
             padding-left: 0;
         }
 
+        /*------  Κάνει το στοιχείο να παραμένει στην οθόνη ακόμα και με scroll */
         .sticky-header-tabs {
             position: fixed; /* Κάνει το στοιχείο να παραμένει στην οθόνη ακόμα και με scroll */
             top: 0;          /* Κολλάει στην κορυφή του viewport */
@@ -702,15 +755,10 @@
 
         /* Πρέπει να προσθέσουμε padding στο περιεχόμενο για να μην κρύβεται κάτω από το fixed header */
         .tab-content {
-            /* Δώστε padding-top ίσο ή λίγο μεγαλύτερο από το συνολικό ύψος του sticky-header-tabs */
-            /* Πρέπει να υπολογίσετε το ύψος του header και των tabs.
-            Ενδεικτικά, ας υποθέσουμε ότι είναι περίπου 100px. Θα χρειαστείτε προσαρμογή. */
-            padding-top: 150px; /* Προσαρμόστε αυτό το ύψος ανάλογα με το πραγματικό ύψος του header+tabs */
+            padding-top: 150px;  
         }
 
-        /* Προαιρετικά: Αν το .MatchcenterHomepageWidget έχει background-color, βεβαιωθείτε ότι το .sticky-header-tabs είναι το ίδιο ή διαφανές */
         .MatchcenterHomepageWidget {
-            /* Εάν είχε background-color, ίσως να το αφαιρέσετε από εδώ ή να το ρυθμίσετε διαφορετικά */
             padding-top: 0; /* Αφαιρέστε τυχόν padding-top από εδώ αν το βάλετε στο tab-content */
         }
             
