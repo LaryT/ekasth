@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -124,11 +125,10 @@
                         parentElement.appendChild(iDivAgvnistikh);
                     }
 
-
                     // --- Αγώνας ---
                     const dateObject = data.getValue(row, 3);
                     let formattedDate = "N/A";
-                    if (dateObject instanceof Date && !isNaN(dateObject.getTime())) {
+                    if (dateObject instanceof Date && !isNaN(dateObject.getTime())) { // Ensure it's a valid Date object
                         const greekMonthsAbbr = [
                             "ΙΑΝ", "ΦΕΒ", "ΜΑΡ", "ΑΠΡ", "ΜΑΪ", "ΙΟΥΝ",
                             "ΙΟΥΛ", "ΑΥΓ", "ΣΕΠ", "ΟΚΤ", "ΝΟΕ", "ΔΕΚ"
@@ -145,46 +145,19 @@
                     const teamAValue = data.getFormattedValue(row, 6);
                     const teamBValue = data.getFormattedValue(row, 7);
                     const statusValue = data.getFormattedValue(row, 2);
-                    const venueValue = data.getFormattedValue(row, 5); // Παίρνουμε την τιμή του γηπέδου
-
-                    let isSpecialCase = false; // Flag για ΡΕΠΟ, ΤΕΛΙΚΟ, ΑΑ
 
                     if (teamAValue === "-" || teamBValue === "-") {
                         iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time">Ρ Ε Π Ο </span></div>';
-                        isSpecialCase = true;
                     } else if (statusValue === "ΤΕΛΙΚΟ") {
                         iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> ΤΕΛΙΚΟ </span> </div>';
-                        isSpecialCase = true;
                     } else if (statusValue === "ΑΑ") {
-                        iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> Α.Α. </span> </div>';
-                        isSpecialCase = true;
+                        iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> ΑΑ </span> </div>';
                     } else {
-                        // Κανονική εμφάνιση ημερομηνίας/ώρας στο header
                         iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time"> ' + data.getFormattedValue(row, 4) + '</span></div>';
                     }
+                    parentElement.appendChild(iDivAgvnas);
 
-                    parentElement.appendChild(iDivAgvnas); // Προσθήκη του βασικού wrapper του αγώνα στο DOM
-
-
-                    // --- Προσθήκη Γηπέδου (αν δεν είναι ειδική περίπτωση) ---
-                    if (!isSpecialCase && venueValue) {
-                        let venueRowDiv = document.createElement('div'); // Νέο div για τη σειρά του γηπέδου
-                        venueRowDiv.classList.add('MatchListItem__venue-row', 'row'); // Προσθέτουμε 'row' για Bootstrap flexbox
-                        
-                        let venueColDiv = document.createElement('div'); // Div για την κολόνα του γηπέδου
-                        venueColDiv.classList.add('MatchListItem__venue-col', 'col'); // 'col' για Bootstrap
-                        
-                        let pVenue = document.createElement('p');
-                        pVenue.classList.add('MatchListItem__venue-text'); // Κλάση για το όνομα του γηπέδου
-                        pVenue.textContent = venueValue;
-
-                        venueColDiv.appendChild(pVenue);
-                        venueRowDiv.appendChild(venueColDiv); // Τοποθετούμε την κολόνα μέσα στη σειρά
-                        iDivAgvnas.appendChild(venueRowDiv); // Προσθέτουμε τη σειρά του γηπέδου στο iDivAgvnas
-                    }
-
-
-                    // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---
+                 // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---
                     let matchContentDiv = document.createElement('div');
                     matchContentDiv.classList.add('MatchListItem__content');
 
@@ -197,13 +170,15 @@
                         let homeLogoDiv = document.createElement('div');
                         homeLogoDiv.classList.add('MatchListItem__teamLogo'); // Προσθέτουμε νέα κλάση για styling
                         homeLogoDiv.style.backgroundImage = `url('${homeLogoUrl}')`;
-                        homeLogoDiv.style.width = '20px';
-                        homeLogoDiv.style.height = '20px';
-                        homeLogoDiv.style.backgroundSize = 'contain';
-                        homeLogoDiv.style.backgroundRepeat = 'no-repeat';
-                        homeLogoDiv.style.backgroundPosition = 'center';
-                        homeLogoDiv.style.marginRight = '8px';
-                        homeTeamDiv.appendChild(homeLogoDiv);
+                        // Προσθέτουμε στυλ για να διασφαλίσουμε ότι το λογότυπο εμφανίζεται σωστά
+                        // Μπορείτε να ρυθμίσετε το μέγεθος (π.χ. 20px) ανάλογα με το ύψος της γραμματοσειράς
+                        homeLogoDiv.style.width = '20px';  // Σταθερό πλάτος
+                        homeLogoDiv.style.height = '20px'; // Σταθερό ύψος, ίσο με το ύψος της γραμματοσειράς
+                        homeLogoDiv.style.backgroundSize = 'contain'; // Το λογότυπο θα χωράει μέσα στο div
+                        homeLogoDiv.style.backgroundRepeat = 'no-repeat'; // Όχι επανάληψη εικόνας
+                        homeLogoDiv.style.backgroundPosition = 'center'; // Κεντράρισμα εικόνας
+                        homeLogoDiv.style.marginRight = '8px'; // Απόσταση από το όνομα της ομάδας
+                        homeTeamDiv.appendChild(homeLogoDiv); // Προσθέτουμε το λογότυπο πριν το όνομα
                     }
 
                     let homeTeamNameSpan = document.createElement('span');
@@ -212,8 +187,8 @@
 
                     let homeTeamScoreSpan = document.createElement('span');
                     homeTeamScoreSpan.classList.add('MatchListItem__teamScore');
-                    const homeScore = parseFloat(data.getFormattedValue(row, 8));
-                    homeTeamScoreSpan.textContent = isNaN(homeScore) ? '-' : homeScore;
+                    const homeScore = parseFloat(data.getFormattedValue(row, 8)); // Μετατροπή σε αριθμό
+                    homeTeamScoreSpan.textContent = isNaN(homeScore) ? '-' : homeScore; // Εμφάνιση παύλας αν δεν είναι αριθμός
 
                     homeTeamDiv.appendChild(homeTeamNameSpan);
                     homeTeamDiv.appendChild(homeTeamScoreSpan);
@@ -222,18 +197,18 @@
                     awayTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--away');
 
                     // --- ΛΟΓΟΤΥΠΟ ΦΙΛΟΞΕΝΟΥΜΕΝΟΥ ---
-                    const awayLogoUrl = data.getFormattedValue(row, 54);
+                    const awayLogoUrl = data.getFormattedValue(row, 54); // URL λογότυπου φιλοξενούμενου
                     if (awayLogoUrl) {
                         let awayLogoDiv = document.createElement('div');
-                        awayLogoDiv.classList.add('MatchListItem__teamLogo');
+                        awayLogoDiv.classList.add('MatchListItem__teamLogo'); // Προσθέτουμε νέα κλάση για styling
                         awayLogoDiv.style.backgroundImage = `url('${awayLogoUrl}')`;
-                        awayLogoDiv.style.width = '20px';
-                        awayLogoDiv.style.height = '20px';
+                        awayLogoDiv.style.width = '20px';  // Σταθερό πλάτος
+                        awayLogoDiv.style.height = '20px'; // Σταθερό ύψος
                         awayLogoDiv.style.backgroundSize = 'contain';
                         awayLogoDiv.style.backgroundRepeat = 'no-repeat';
                         awayLogoDiv.style.backgroundPosition = 'center';
-                        awayLogoDiv.style.marginRight = '8px';
-                        awayTeamDiv.appendChild(awayLogoDiv);
+                        awayLogoDiv.style.marginRight = '8px'; // Απόσταση από το όνομα της ομάδας
+                        awayTeamDiv.appendChild(awayLogoDiv); // Προσθέτουμε το λογότυπο πριν το όνομα
                     }
 
                     let awayTeamNameSpan = document.createElement('span');
@@ -242,8 +217,8 @@
 
                     let awayTeamScoreSpan = document.createElement('span');
                     awayTeamScoreSpan.classList.add('MatchListItem__teamScore');
-                    const awayScore = parseFloat(data.getFormattedValue(row, 9));
-                    awayTeamScoreSpan.textContent = isNaN(awayScore) ? '' : awayScore;
+                    const awayScore = parseFloat(data.getFormattedValue(row, 9)); // Μετατροπή σε αριθμό
+                    awayTeamScoreSpan.textContent = isNaN(awayScore) ? '' : awayScore; // Εμφάνιση κενού αν δεν είναι αριθμός
 
                     awayTeamDiv.appendChild(awayTeamNameSpan);
                     awayTeamDiv.appendChild(awayTeamScoreSpan);
@@ -259,7 +234,7 @@
                             awayTeamDiv.classList.add('MatchListItem__team--winning');
                         }
                     }
-                    iDivAgvnas.appendChild(matchContentDiv); // Προσθήκη του matchContentDiv στην αρχική δομή του αγώνα
+                    iDivAgvnas.appendChild(matchContentDiv); // Προσθήκη στην αρχική δομή του αγώνα
                 }
         }
 
@@ -319,6 +294,7 @@
                         const monthAbbr = greekMonthsAbbr[dateObject.getMonth()];
                         formattedDate = `${day} ${monthAbbr}`;
                     }
+    
 
                     let iDivAgvnas = document.createElement('div');
                     iDivAgvnas.id = 'agvnas-prg-div-' + row;
@@ -327,39 +303,18 @@
                     const teamAValue = data.getFormattedValue(row, 6);
                     const teamBValue = data.getFormattedValue(row, 7);
                     const statusValue = data.getFormattedValue(row, 2);
-                    const venueValue = data.getFormattedValue(row, 5); // Παίρνουμε την τιμή του γηπέδου
-
-                    let isSpecialCase = false; // Flag για ΡΕΠΟ, ΤΕΛΙΚΟ, ΑΑ
 
                     if (teamAValue === "-" || teamBValue === "-") {
                         iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time">Ρ Ε Π Ο </span></div>';
-                        isSpecialCase = true;
+                        isRepo=true
                     } else if (statusValue === "ΤΕΛΙΚΟ") {
                         iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> ΤΕΛΙΚΟ </span> </div>';
-                        isSpecialCase = true;
                     } else if (statusValue === "ΑΑ") {
-                        iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> Α.Α. </span> </div>';
-                        isSpecialCase = true;
+                        iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> ΑΑ </span> </div>';
                     } else {
-                        // Κανονική εμφάνιση ημερομηνίας/ώρας στο header
                         iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time"> ' + data.getFormattedValue(row, 4) + '</span></div>';
                     }
-
-                    parentElement.appendChild(iDivAgvnas); // Προσθήκη του βασικού wrapper του αγώνα στο DOM
-
-
-                    // --- Προσθήκη Γηπέδου (αν δεν είναι ειδική περίπτωση) ---
-                    if (!isSpecialCase && venueValue) {
-                        let venueDiv = document.createElement('div');
-                        venueDiv.classList.add('MatchListItem__venue-container'); // Νέα κλάση για το wrapper του γηπέδου
-                        
-                        let pVenue = document.createElement('p');
-                        pVenue.classList.add('MatchListItem__venue-name'); // Κλάση για το όνομα του γηπέδου
-                        pVenue.textContent = venueValue;
-
-                        venueDiv.appendChild(pVenue);
-                        iDivAgvnas.appendChild(venueDiv); // Προσθέτουμε το div του γηπέδου στο iDivAgvnas
-                    }
+                    parentElement.appendChild(iDivAgvnas);
 
 
                 // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---
@@ -375,13 +330,15 @@
                         let homeLogoDiv = document.createElement('div');
                         homeLogoDiv.classList.add('MatchListItem__teamLogo'); // Προσθέτουμε νέα κλάση για styling
                         homeLogoDiv.style.backgroundImage = `url('${homeLogoUrl}')`;
-                        homeLogoDiv.style.width = '20px';
-                        homeLogoDiv.style.height = '20px';
-                        homeLogoDiv.style.backgroundSize = 'contain';
-                        homeLogoDiv.style.backgroundRepeat = 'no-repeat';
-                        homeLogoDiv.style.backgroundPosition = 'center';
-                        homeLogoDiv.style.marginRight = '8px';
-                        homeTeamDiv.appendChild(homeLogoDiv);
+                        // Προσθέτουμε στυλ για να διασφαλίσουμε ότι το λογότυπο εμφανίζεται σωστά
+                        // Μπορείτε να ρυθμίσετε το μέγεθος (π.χ. 20px) ανάλογα με το ύψος της γραμματοσειράς
+                        homeLogoDiv.style.width = '20px';  // Σταθερό πλάτος
+                        homeLogoDiv.style.height = '20px'; // Σταθερό ύψος, ίσο με το ύψος της γραμματοσειράς
+                        homeLogoDiv.style.backgroundSize = 'contain'; // Το λογότυπο θα χωράει μέσα στο div
+                        homeLogoDiv.style.backgroundRepeat = 'no-repeat'; // Όχι επανάληψη εικόνας
+                        homeLogoDiv.style.backgroundPosition = 'center'; // Κεντράρισμα εικόνας
+                        homeLogoDiv.style.marginRight = '8px'; // Απόσταση από το όνομα της ομάδας
+                        homeTeamDiv.appendChild(homeLogoDiv); // Προσθέτουμε το λογότυπο πριν το όνομα
                     }
 
                     let homeTeamNameSpan = document.createElement('span');
@@ -390,8 +347,8 @@
 
                     let homeTeamScoreSpan = document.createElement('span');
                     homeTeamScoreSpan.classList.add('MatchListItem__teamScore');
-                    const homeScore = parseFloat(data.getFormattedValue(row, 8));
-                    homeTeamScoreSpan.textContent = isNaN(homeScore) ? '-' : homeScore;
+                    const homeScore = parseFloat(data.getFormattedValue(row, 8)); // Μετατροπή σε αριθμό
+                    homeTeamScoreSpan.textContent = isNaN(homeScore) ? '-' : homeScore; // Εμφάνιση παύλας αν δεν είναι αριθμός
 
                     homeTeamDiv.appendChild(homeTeamNameSpan);
                     homeTeamDiv.appendChild(homeTeamScoreSpan);
@@ -400,18 +357,18 @@
                     awayTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--away');
 
                     // --- ΛΟΓΟΤΥΠΟ ΦΙΛΟΞΕΝΟΥΜΕΝΟΥ ---
-                    const awayLogoUrl = data.getFormattedValue(row, 54);
+                    const awayLogoUrl = data.getFormattedValue(row, 54); // URL λογότυπου φιλοξενούμενου
                     if (awayLogoUrl) {
                         let awayLogoDiv = document.createElement('div');
-                        awayLogoDiv.classList.add('MatchListItem__teamLogo');
+                        awayLogoDiv.classList.add('MatchListItem__teamLogo'); // Προσθέτουμε νέα κλάση για styling
                         awayLogoDiv.style.backgroundImage = `url('${awayLogoUrl}')`;
-                        awayLogoDiv.style.width = '20px';
-                        awayLogoDiv.style.height = '20px';
+                        awayLogoDiv.style.width = '20px';  // Σταθερό πλάτος
+                        awayLogoDiv.style.height = '20px'; // Σταθερό ύψος
                         awayLogoDiv.style.backgroundSize = 'contain';
                         awayLogoDiv.style.backgroundRepeat = 'no-repeat';
                         awayLogoDiv.style.backgroundPosition = 'center';
-                        awayLogoDiv.style.marginRight = '8px';
-                        awayTeamDiv.appendChild(awayLogoDiv);
+                        awayLogoDiv.style.marginRight = '8px'; // Απόσταση από το όνομα της ομάδας
+                        awayTeamDiv.appendChild(awayLogoDiv); // Προσθέτουμε το λογότυπο πριν το όνομα
                     }
 
                     let awayTeamNameSpan = document.createElement('span');
@@ -420,8 +377,8 @@
 
                     let awayTeamScoreSpan = document.createElement('span');
                     awayTeamScoreSpan.classList.add('MatchListItem__teamScore');
-                    const awayScore = parseFloat(data.getFormattedValue(row, 9));
-                    awayTeamScoreSpan.textContent = isNaN(awayScore) ? '' : awayScore;
+                    const awayScore = parseFloat(data.getFormattedValue(row, 9)); // Μετατροπή σε αριθμό
+                    awayTeamScoreSpan.textContent = isNaN(awayScore) ? '' : awayScore; // Εμφάνιση κενού αν δεν είναι αριθμός
 
                     awayTeamDiv.appendChild(awayTeamNameSpan);
                     awayTeamDiv.appendChild(awayTeamScoreSpan);
@@ -437,7 +394,7 @@
                             awayTeamDiv.classList.add('MatchListItem__team--winning');
                         }
                     }
-                    iDivAgvnas.appendChild(matchContentDiv); // Προσθήκη του matchContentDiv στην αρχική δομή του αγώνα     
+                    iDivAgvnas.appendChild(matchContentDiv);
 
 
                 // --- Προσθήκη των Στοιχείων Ορισμών (Διαιτητές, Κομισάριος, Κριτές) ---
@@ -612,9 +569,8 @@
 
         .MatchListItem__wrapper {
             border-bottom: 4px solid #e2e4e6;
-            display: flex; /* Είναι ήδη flex */
-            flex-direction: column; /* Τοποθετεί header, venue-row, content σε στήλη */
-            align-items: stretch; /* Stretch items to fill the width */
+            display: flex;
+            align-items: stretch;
             justify-content: flex-start;
             padding: 10px 0;
             text-decoration: none;
@@ -630,15 +586,15 @@
         }        
 
         .MatchListItem__header {
-            align-items: center;
-            border-right: 1px solid #e2e4e6;
             display: flex;
             flex-flow: column;
-            flex: 0 0 65px;
+            align-items: center;
             justify-content: center;
-            text-align: center;           
-            padding: 0 5px 0 0;
+            text-align: center;
             width: 65px;
+            flex: 0 0 65px;
+            padding: 0 5px 0 0;
+            border-right: 1px solid #e2e4e6;
         }
 
         .MatchListItem__date {
@@ -656,37 +612,7 @@
             font-weight: bold;
             text-align: center;
             line-height: 0.8;
-        }     
-
-/* --- ΝΕΑ ΣΤΥΛ ΓΙΑ ΤΟ ΓΗΠΕΔΟ --- */
-.MatchListItem__venue-row {
-    display: flex; /* Για να είναι flex container */
-    align-items: center; /* Κεντράρει κάθετα το περιεχόμενο (όνομα γηπέδου) */
-    /* width: 100%; */ /* Η κλάση .row από Bootstrap το κάνει ήδη 100% width */
-    min-height: 58px; /* Ίδιο ύψος με το MatchListItem__header */
-    border-right: 1px solid #e2e4e6; /* Για να έχει την ίδια κάθετη γραμμή */
-    margin-bottom: 5px; /* Κενό κάτω από το γήπεδο και πριν τις ομάδες */
-    padding: 0 5px 0 0; /* Ίδιο padding με το header */
-}
-
-.MatchListItem__venue-col {
-    /* Επειδή είναι .col, θα πάρει το διαθέσιμο χώρο */
-    flex: 1; /* Επιτρέπει να επεκταθεί */
-    text-align: left; /* Στοίχιση αριστερά όπως ζητήθηκε */
-    padding-left: 15px; /* Απόσταση από την αριστερή άκρη, όπως οι ομάδες */
-    box-sizing: border-box; /* Διασφαλίζει ότι το padding περιλαμβάνεται στο πλάτος */
-}
-
-.MatchListItem__venue-text {
-    color: #003e5e; /* Ίδιο χρώμα με το header, όπως ζητήθηκε */
-    font-size: 12px; /* Ίδιο μέγεθος με το header, όπως ζητήθηκε */
-    font-weight: bold; /* Ίδιο font-weight με την ώρα */
-    text-transform: uppercase; /* Για συνέπεια με ημερομηνία */
-    line-height: 1.4; /* Για να διαχειρίζεται σωστά τις πολλές γραμμές */
-    word-wrap: break-word; /* Διασπάει τις λέξεις αν είναι πολύ μεγάλες */
-    overflow-wrap: break-word; /* Εναλλακτική/νεότερη ιδιότητα */
-    margin: 0; /* Αφαιρέστε το default margin του p */
-}        
+        }
 
         /* --- ΟΜΑΔΕΣ ΑΓΩΝΑ -- */
         .MatchListItem__content {
@@ -694,20 +620,16 @@
             display: flex;
             flex-direction: column;
             justify-content: center; /* Center content vertically */
-            /* ΠΡΟΣΤΕΘΗΚΑΝ για την καλυτερη εμφανιση του γηπεδοου */
-            align-items: flex-start; /* Προσαρμογή: Στοίχιση των ομάδων προς τα αριστερά */
-            width: 100%; /* Διασφαλίζει ότι καλύπτει το διαθέσιμο πλάτος */            
-            /* padding-left: 15px;  Προσθήκη padding αριστερά για να ευθυγραμμιστεί με το γήπεδο */
-
         }
 
         .MatchListItem__team {
             display: flex;
-            width: 100%; /* Διασφάλιση ότι η ομάδα πιάνει το διαθέσιμο πλάτος */
-            padding: 0;
+            padding: 0 15px;
         }
 
-     
+        .MatchListItem__team--home {
+            margin-bottom: 10px;
+        }
 
         .MatchListItem__team--away {
             margin-bottom: 0px;
@@ -770,7 +692,6 @@
             padding-left: 0;
         }
 
-        /*------  Κάνει το στοιχείο να παραμένει στην οθόνη ακόμα και με scroll */
         .sticky-header-tabs {
             position: fixed; /* Κάνει το στοιχείο να παραμένει στην οθόνη ακόμα και με scroll */
             top: 0;          /* Κολλάει στην κορυφή του viewport */
@@ -782,10 +703,15 @@
 
         /* Πρέπει να προσθέσουμε padding στο περιεχόμενο για να μην κρύβεται κάτω από το fixed header */
         .tab-content {
-            padding-top: 150px;  
+            /* Δώστε padding-top ίσο ή λίγο μεγαλύτερο από το συνολικό ύψος του sticky-header-tabs */
+            /* Πρέπει να υπολογίσετε το ύψος του header και των tabs.
+            Ενδεικτικά, ας υποθέσουμε ότι είναι περίπου 100px. Θα χρειαστείτε προσαρμογή. */
+            padding-top: 150px; /* Προσαρμόστε αυτό το ύψος ανάλογα με το πραγματικό ύψος του header+tabs */
         }
 
+        /* Προαιρετικά: Αν το .MatchcenterHomepageWidget έχει background-color, βεβαιωθείτε ότι το .sticky-header-tabs είναι το ίδιο ή διαφανές */
         .MatchcenterHomepageWidget {
+            /* Εάν είχε background-color, ίσως να το αφαιρέσετε από εδώ ή να το ρυθμίσετε διαφορετικά */
             padding-top: 0; /* Αφαιρέστε τυχόν padding-top από εδώ αν το βάλετε στο tab-content */
         }
             
