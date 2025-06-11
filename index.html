@@ -337,15 +337,15 @@
 
                     //---- ghpedo panv apo omada A
                     let ghpedoDiv = document.createElement('div');
-                    ghpedoDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home');
+                    ghpedoDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home', 'MatchListItem__Ghpedo');
 
                     let ghpedoNameSpan = document.createElement('span');
-                    ghpedoNameSpan.classList.add('MatchListItem__teamName');
+                    ghpedoNameSpan.classList.add('MatchListItem__ghpedoName');
                     ghpedoNameSpan.textContent = data.getFormattedValue(row, 5);   
 
                     ghpedoDiv.appendChild(ghpedoNameSpan);
                     matchContentDiv.appendChild(ghpedoDiv);
-                    
+
                                         
                     //---- omada A + omada B
 
@@ -666,6 +666,18 @@
         .MatchListItem__teamName {
             margin-right: auto;
         }
+
+        .MatchListItem__Ghpedo{
+            margin-bottom: 0px;
+        }
+        .MatchListItem__ghpedoName{
+            color: #003e5e;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .03em;  
+                 
+        }
+
 
         .MatchListItem__teamName,
         .MatchListItem__teamScore {
