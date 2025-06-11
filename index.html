@@ -74,6 +74,8 @@
             document.getElementById('pills-prg').classList.add('show');
 
             //--- trexei orismous mia fora arxika kai gemizei antistoixo tab
+            document.getElementById('pills-orismoi').classList.add('active');
+            document.getElementById('pills-orismoi').classList.add('show');
             renderOrismoi('pills-orismoi-container-id');
             document.getElementById('pills-orismoi').classList.remove('active');
             document.getElementById('pills-orismoi').classList.remove('show');
@@ -730,39 +732,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-    <script>
-//=============
 
-    // --- Event Listeners για τα Tabs ---
-    /*
-    document.addEventListener('DOMContentLoaded', function () {
-        const pillsPrgTab = document.getElementById('pills-prg-tab');
-        const pillsOrismoiTab = document.getElementById('pills-orismoi-tab');
-
-        if (pillsPrgTab) {
-            pillsPrgTab.addEventListener('shown.bs.tab', function (event) {
-                renderMatches('pills-prg-container-id');
-            });
-        }
-
-        if (pillsOrismoiTab) {
-            pillsOrismoiTab.addEventListener('shown.bs.tab', function (event) {
-                renderOrismoi('pills-orismoi-container-id');
-            });
-        }
-
-        // Καλείται την πρώτη φορά που φορτώνεται η σελίδα για το ενεργό tab
-        // Βεβαιωθείτε ότι καλείται η σωστή συνάρτηση για το αρχικά ενεργό tab
-        // (Σε αυτό το HTML, το 'pills-prg' είναι το active tab)
-        if (document.querySelector('#pills-prg.show.active')) {
-            renderMatches('pills-prg-container-id'); // <-- Αυτή η γραμμή το κάνει ήδη!
-        }
-    });
-
-    */
-
-
-//=============
-    </script>
 </body>
 </html>
