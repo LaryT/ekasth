@@ -123,39 +123,7 @@
                         iDivAgvnistikh.className = 'row MatchList__subtitle';
                         parentElement.appendChild(iDivAgvnistikh);
                     }
-/*
-                    // --- Αγώνας ---
-                    const dateObject = data.getValue(row, 3);
-                    let formattedDate = "N/A";
-                    if (dateObject instanceof Date && !isNaN(dateObject.getTime())) { // Ensure it's a valid Date object
-                        const greekMonthsAbbr = [
-                            "ΙΑΝ", "ΦΕΒ", "ΜΑΡ", "ΑΠΡ", "ΜΑΪ", "ΙΟΥΝ",
-                            "ΙΟΥΛ", "ΑΥΓ", "ΣΕΠ", "ΟΚΤ", "ΝΟΕ", "ΔΕΚ"
-                        ];
-                        const day = dateObject.getDate();
-                        const monthAbbr = greekMonthsAbbr[dateObject.getMonth()];
-                        formattedDate = `${day} ${monthAbbr}`;
-                    }
 
-                    let iDivAgvnas = document.createElement('div');
-                    iDivAgvnas.id = 'agvnas-prg-div-' + row;
-                    iDivAgvnas.className = 'row MatchListItem__wrapper MatchList__match';
-
-                    const teamAValue = data.getFormattedValue(row, 6);
-                    const teamBValue = data.getFormattedValue(row, 7);
-                    const statusValue = data.getFormattedValue(row, 2);
-
-                    if (teamAValue === "-" || teamBValue === "-") {
-                        iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time">Ρ Ε Π Ο </span></div>';
-                    } else if (statusValue === "ΤΕΛΙΚΟ") {
-                        iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> ΤΕΛΙΚΟ </span> </div>';
-                    } else if (statusValue === "ΑΑ") {
-                        iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> ΑΑ </span> </div>';
-                    } else {
-                        iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time"> ' + data.getFormattedValue(row, 4) + '</span></div>';
-                    }
-                    parentElement.appendChild(iDivAgvnas);
-*/
 
                     // --- Αγώνας ---
                     const dateObject = data.getValue(row, 3);
@@ -200,19 +168,23 @@
 
                     // --- Προσθήκη Γηπέδου (αν δεν είναι ειδική περίπτωση) ---
                     if (!isSpecialCase && venueValue) {
-                        let venueDiv = document.createElement('div');
-                        venueDiv.classList.add('MatchListItem__venue-container'); // Νέα κλάση για το wrapper του γηπέδου
+                        let venueRowDiv = document.createElement('div'); // Νέο div για τη σειρά του γηπέδου
+                        venueRowDiv.classList.add('MatchListItem__venue-row', 'row'); // Προσθέτουμε 'row' για Bootstrap flexbox
+                        
+                        let venueColDiv = document.createElement('div'); // Div για την κολόνα του γηπέδου
+                        venueColDiv.classList.add('MatchListItem__venue-col', 'col'); // 'col' για Bootstrap
                         
                         let pVenue = document.createElement('p');
-                        pVenue.classList.add('MatchListItem__venue-name'); // Κλάση για το όνομα του γηπέδου
+                        pVenue.classList.add('MatchListItem__venue-text'); // Κλάση για το όνομα του γηπέδου
                         pVenue.textContent = venueValue;
 
-                        venueDiv.appendChild(pVenue);
-                        iDivAgvnas.appendChild(venueDiv); // Προσθέτουμε το div του γηπέδου στο iDivAgvnas
+                        venueColDiv.appendChild(pVenue);
+                        venueRowDiv.appendChild(venueColDiv); // Τοποθετούμε την κολόνα μέσα στη σειρά
+                        iDivAgvnas.appendChild(venueRowDiv); // Προσθέτουμε τη σειρά του γηπέδου στο iDivAgvnas
                     }
 
 
-                // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---
+                    // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---
                     let matchContentDiv = document.createElement('div');
                     matchContentDiv.classList.add('MatchListItem__content');
 
@@ -640,8 +612,9 @@
 
         .MatchListItem__wrapper {
             border-bottom: 4px solid #e2e4e6;
-            display: flex;
-            align-items: stretch;
+            display: flex; /* Είναι ήδη flex */
+            flex-direction: column; /* Τοποθετεί header, venue-row, content σε στήλη */
+            align-items: stretch; /* Stretch items to fill the width */
             justify-content: flex-start;
             padding: 10px 0;
             text-decoration: none;
@@ -683,60 +656,37 @@
             font-weight: bold;
             text-align: center;
             line-height: 0.8;
-        }
-        /*-----  Για το γήπεδο του αγώνα */
-        .MatchListItem__venue {
-            font-size: 0.65em; /* Ελαφρώς μικρότερο μέγεθος γραμματοσειράς */
-            color: #6c757d;   /* Ανοιχτό γκρι χρώμα για δευτερεύουσες πληροφορίες */
-            margin-top: 5px;  /* Μικρό κενό πάνω από το όνομα του γηπέδου */
-            /* text-align: center; */ /* Εάν το header είναι flexbox και θέλετε να είναι κεντραρισμένο, ίσως χρειαστεί */
-            width: 100%; /* Για να πιάνει όλο το διαθέσιμο πλάτος και να είναι σε νέα γραμμή */
-            /* ΝΕΕΣ ΙΔΙΟΤΗΤΕΣ ΓΙΑ ΤΗ ΔΙΑΧΕΙΡΙΣΗ ΜΑΚΡΥΩΝ ΟΝΟΜΑΤΩΝ */
-                word-wrap: break-word; /* Επιτρέπει τη διάσπαση λέξεων σε νέα γραμμή αν δεν χωράνε */
-                overflow-wrap: break-word; /* Εναλλακτική/νεότερη ιδιότητα του word-wrap */
-                text-align: center; /* Κεντράρισμα του κειμένου */
-                max-width: 65px; /* Διασφαλίζει ότι δεν θα ξεπεράσει το πλάτος του γονέα */
-                box-sizing: border-box; /* Περιλαμβάνει padding/border στο width */
-                padding: 0 2px; /* Μικρό padding αριστερά/δεξιά για να μην κολλάει στις άκρες */
+        }     
 
-        }
+/* --- ΝΕΑ ΣΤΥΛ ΓΙΑ ΤΟ ΓΗΠΕΔΟ --- */
+.MatchListItem__venue-row {
+    display: flex; /* Για να είναι flex container */
+    align-items: center; /* Κεντράρει κάθετα το περιεχόμενο (όνομα γηπέδου) */
+    /* width: 100%; */ /* Η κλάση .row από Bootstrap το κάνει ήδη 100% width */
+    min-height: 58px; /* Ίδιο ύψος με το MatchListItem__header */
+    border-right: 1px solid #e2e4e6; /* Για να έχει την ίδια κάθετη γραμμή */
+    margin-bottom: 5px; /* Κενό κάτω από το γήπεδο και πριν τις ομάδες */
+    padding: 0 5px 0 0; /* Ίδιο padding με το header */
+}
 
-        /* Εάν το MatchListItem__header είναι flex container, ίσως χρειαστείτε αυτό: */
-        .MatchListItem__header {
-            display: flex;
-            flex-direction: column; /* Τα στοιχεία του header θα είναι σε στήλη */
-            align-items: center;    /* Κεντράρισμα των στοιχείων οριζόντια */
-            justify-content: center; /* Κεντράρισμα των στοιχείων κάθετα */
-            text-align: center; /* Για να κεντράρετε το κείμενο μέσα σε κάθε span/div */
-            /* ... άλλα υπάρχοντα στυλ ... */
-        }
+.MatchListItem__venue-col {
+    /* Επειδή είναι .col, θα πάρει το διαθέσιμο χώρο */
+    flex: 1; /* Επιτρέπει να επεκταθεί */
+    text-align: left; /* Στοίχιση αριστερά όπως ζητήθηκε */
+    padding-left: 15px; /* Απόσταση από την αριστερή άκρη, όπως οι ομάδες */
+    box-sizing: border-box; /* Διασφαλίζει ότι το padding περιλαμβάνεται στο πλάτος */
+}
 
-        .MatchListItem__date,
-        .MatchListItem__time {
-            display: block; /* Για να είναι σε ξεχωριστές γραμμές */
-            /* ... άλλα υπάρχοντα στυλ ... */
-        }
-
-
-            /* ====== Νέες κλάσεις για το γήπεδο ==== */
-            .MatchListItem__venue-container {
-                width: 100%;            /* Πιάνει όλο το πλάτος του γονέα του (iDivAgvnas) */
-                text-align: center;     /* Κεντράρει το περιεχόμενο του γηπέδου */
-                margin-bottom: 5px;     /* Μικρό κενό κάτω από το γήπεδο, πριν τις ομάδες */
-                padding: 0 10px;        /* Κάποιο οριζόντιο padding για να μην κολλάει το κείμενο στις άκρες */
-                box-sizing: border-box; /* Για σωστό υπολογισμό πλάτους με padding */
-            }
-
-            .MatchListItem__venue-name {
-                font-size: 0.8em;       /* Μέγεθος γραμματοσειράς - προσαρμόστε όπως θέλετε */
-                color: #495057;         /* Σκούρο γκρι χρώμα */
-                font-weight: 500;       /* Ελαφρώς πιο έντονο */
-                line-height: 1.3;       /* Απόσταση γραμμών για καλύτερη αναγνωσιμότητα */
-                word-wrap: break-word;  /* Διασπάει τις μακριές λέξεις */
-                overflow-wrap: break-word; /* Εναλλακτική/νεότερη ιδιότητα */
-            }
-
-        
+.MatchListItem__venue-text {
+    color: #003e5e; /* Ίδιο χρώμα με το header, όπως ζητήθηκε */
+    font-size: 12px; /* Ίδιο μέγεθος με το header, όπως ζητήθηκε */
+    font-weight: bold; /* Ίδιο font-weight με την ώρα */
+    text-transform: uppercase; /* Για συνέπεια με ημερομηνία */
+    line-height: 1.4; /* Για να διαχειρίζεται σωστά τις πολλές γραμμές */
+    word-wrap: break-word; /* Διασπάει τις λέξεις αν είναι πολύ μεγάλες */
+    overflow-wrap: break-word; /* Εναλλακτική/νεότερη ιδιότητα */
+    margin: 0; /* Αφαιρέστε το default margin του p */
+}        
 
         /* --- ΟΜΑΔΕΣ ΑΓΩΝΑ -- */
         .MatchListItem__content {
@@ -745,13 +695,15 @@
             flex-direction: column;
             justify-content: center; /* Center content vertically */
             /* ΠΡΟΣΤΕΘΗΚΑΝ για την καλυτερη εμφανιση του γηπεδοου */
-            justify-content: space-around; /* Ή space-between, ανάλογα πώς θέλετε τις ομάδες */
-            align-items: center;
+            align-items: flex-start; /* Προσαρμογή: Στοίχιση των ομάδων προς τα αριστερά */
             width: 100%; /* Διασφαλίζει ότι καλύπτει το διαθέσιμο πλάτος */            
+            padding-left: 15px; /* Προσθήκη padding αριστερά για να ευθυγραμμιστεί με το γήπεδο */
+
         }
 
         .MatchListItem__team {
             display: flex;
+            width: 100%; /* Διασφάλιση ότι η ομάδα πιάνει το διαθέσιμο πλάτος */
             padding: 0 15px;
         }
 
