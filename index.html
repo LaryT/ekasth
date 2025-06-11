@@ -162,8 +162,7 @@
                     matchContentDiv.classList.add('MatchListItem__content');
 
 
-//---- edv gia ghpedo panv apo omada A
-
+                    //---- ghpedo panv apo omada A
                     let ghpedoDiv = document.createElement('div');
                     ghpedoDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home');
 
@@ -173,9 +172,8 @@
 
                     ghpedoDiv.appendChild(ghpedoNameSpan);
                     matchContentDiv.appendChild(ghpedoDiv);
-
-                    
-                    
+                                        
+                    //---- omada A + omada B
 
                     let homeTeamDiv = document.createElement('div');
                     homeTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home');
@@ -337,7 +335,18 @@
                     let matchContentDiv = document.createElement('div');
                     matchContentDiv.classList.add('MatchListItem__content');
 
-//--- edv gia ghpedo stoyw orismous
+                    //---- ghpedo panv apo omada A
+                    let ghpedoDiv = document.createElement('div');
+                    ghpedoDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home');
+
+                    let ghpedoNameSpan = document.createElement('span');
+                    ghpedoNameSpan.classList.add('MatchListItem__teamName');
+                    ghpedoNameSpan.textContent = data.getFormattedValue(row, 5);   
+
+                    ghpedoDiv.appendChild(ghpedoNameSpan);
+                    matchContentDiv.appendChild(ghpedoDiv);
+                                        
+                    //---- omada A + omada B
 
                     let homeTeamDiv = document.createElement('div');
                     homeTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home');
