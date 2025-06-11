@@ -207,7 +207,7 @@
 
                     iDivAgvnas.innerHTML = headerHtml; // Αναθέτουμε το δημιουργημένο HTML στο div του αγώνα
                     parentElement.appendChild(iDivAgvnas);
-                    
+
                  // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---
                     let matchContentDiv = document.createElement('div');
                     matchContentDiv.classList.add('MatchListItem__content');
@@ -663,6 +663,30 @@
             font-weight: bold;
             text-align: center;
             line-height: 0.8;
+        }
+        /*-----  Για το γήπεδο του αγώνα */
+        .MatchListItem__venue {
+            font-size: 0.85em; /* Ελαφρώς μικρότερο μέγεθος γραμματοσειράς */
+            color: #6c757d;   /* Ανοιχτό γκρι χρώμα για δευτερεύουσες πληροφορίες */
+            margin-top: 5px;  /* Μικρό κενό πάνω από το όνομα του γηπέδου */
+            /* text-align: center; */ /* Εάν το header είναι flexbox και θέλετε να είναι κεντραρισμένο, ίσως χρειαστεί */
+            width: 100%; /* Για να πιάνει όλο το διαθέσιμο πλάτος και να είναι σε νέα γραμμή */
+        }
+
+        /* Εάν το MatchListItem__header είναι flex container, ίσως χρειαστείτε αυτό: */
+        .MatchListItem__header {
+            display: flex;
+            flex-direction: column; /* Τα στοιχεία του header θα είναι σε στήλη */
+            align-items: center;    /* Κεντράρισμα των στοιχείων οριζόντια */
+            justify-content: center; /* Κεντράρισμα των στοιχείων κάθετα */
+            text-align: center; /* Για να κεντράρετε το κείμενο μέσα σε κάθε span/div */
+            /* ... άλλα υπάρχοντα στυλ ... */
+        }
+
+        .MatchListItem__date,
+        .MatchListItem__time {
+            display: block; /* Για να είναι σε ξεχωριστές γραμμές */
+            /* ... άλλα υπάρχοντα στυλ ... */
         }
 
         /* --- ΟΜΑΔΕΣ ΑΓΩΝΑ -- */
