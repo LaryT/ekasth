@@ -103,6 +103,9 @@
 
                 for (let row = 0; row < posesEggrafes; row++) {
 
+                    // metablhth gia to όταν υπάρχει ΡΕΠΟ σε μια ομάδα να μην εμφανίζεται το γηπεδο
+                    var isRepo=false;                    
+
                     // --- Στοιχεία Κατηγορίας/Ομίλου ---
                     if (curOmilosKathgoria_prg !== data.getFormattedValue(row, 0)) {
                         curOmilosKathgoria_prg = data.getFormattedValue(row, 0);
@@ -148,6 +151,7 @@
 
                     if (teamAValue === "-" || teamBValue === "-") {
                         iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date">' + formattedDate + '</span> <span class="MatchListItem__time">Ρ Ε Π Ο </span></div>';
+                        isRepo=true
                     } else if (statusValue === "ΤΕΛΙΚΟ") {
                         iDivAgvnas.innerHTML = '<div class="col MatchListItem__header"><span class="MatchListItem__date"> ΤΕΛΙΚΟ </span> </div>';
                     } else if (statusValue === "ΑΑ") {
