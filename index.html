@@ -161,6 +161,20 @@
                     let matchContentDiv = document.createElement('div');
                     matchContentDiv.classList.add('MatchListItem__content');
 
+
+//---- edv gia ghpedo panv apo omada A
+
+                    let ghpedoDiv = document.createElement('div');
+                    ghpedoDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home');
+
+                    let ghpedoNameSpan = document.createElement('span');
+                    ghpedoNameSpan.classList.add('MatchListItem__teamName');
+                    ghpedoNameSpan.textContent = data.getFormattedValue(row, 5);   
+
+                    ghpedoDiv.appendChild(ghpedoNameSpan);
+                    
+                    
+
                     let homeTeamDiv = document.createElement('div');
                     homeTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home');
 
@@ -320,6 +334,8 @@
                 // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---
                     let matchContentDiv = document.createElement('div');
                     matchContentDiv.classList.add('MatchListItem__content');
+
+//--- edv gia ghpedo stoyw orismous
 
                     let homeTeamDiv = document.createElement('div');
                     homeTeamDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home');
