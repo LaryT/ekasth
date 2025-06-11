@@ -163,16 +163,17 @@
 
 
                     //---- ghpedo panv apo omada A
-                    let ghpedoDiv = document.createElement('div');
-                    ghpedoDiv.classList.add('MatchListItem__Ghpedo');
+                    if(!isRepo){                     
+                        let ghpedoDiv = document.createElement('div');
+                        ghpedoDiv.classList.add('MatchListItem__Ghpedo');
 
-                    let ghpedoNameSpan = document.createElement('span');
-                    ghpedoNameSpan.classList.add('MatchListItem__ghpedoName');
-                    ghpedoNameSpan.textContent = data.getFormattedValue(row, 5);   
+                        let ghpedoNameSpan = document.createElement('span');
+                        ghpedoNameSpan.classList.add('MatchListItem__ghpedoName');
+                        ghpedoNameSpan.textContent = data.getFormattedValue(row, 5);   
 
-                    ghpedoDiv.appendChild(ghpedoNameSpan);
-                    matchContentDiv.appendChild(ghpedoDiv);
-                                        
+                        ghpedoDiv.appendChild(ghpedoNameSpan);
+                        matchContentDiv.appendChild(ghpedoDiv);
+                    }                
                     //---- omada A + omada B kai neo css
 
                     let homeTeamDiv = document.createElement('div');
@@ -331,21 +332,23 @@
                     parentElement.appendChild(iDivAgvnas);
 
 
-                // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---
+                // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---]
+
                     let matchContentDiv = document.createElement('div');
                     matchContentDiv.classList.add('MatchListItem__content');
 
                     //---- ghpedo panv apo omada A
-                    let ghpedoDiv = document.createElement('div');
-                    ghpedoDiv.classList.add('MatchListItem__Ghpedo');
+                    if(!isRepo){                    
+                        let ghpedoDiv = document.createElement('div');
+                        ghpedoDiv.classList.add('MatchListItem__Ghpedo');
 
-                    let ghpedoNameSpan = document.createElement('span');
-                    ghpedoNameSpan.classList.add('MatchListItem__ghpedoName');
-                    ghpedoNameSpan.textContent = data.getFormattedValue(row, 5);   
+                        let ghpedoNameSpan = document.createElement('span');
+                        ghpedoNameSpan.classList.add('MatchListItem__ghpedoName');
+                        ghpedoNameSpan.textContent = data.getFormattedValue(row, 5);   
 
-                    ghpedoDiv.appendChild(ghpedoNameSpan);
-                    matchContentDiv.appendChild(ghpedoDiv);
-
+                        ghpedoDiv.appendChild(ghpedoNameSpan);
+                        matchContentDiv.appendChild(ghpedoDiv);
+                    }
                                         
                     //---- omada A + omada B
 
