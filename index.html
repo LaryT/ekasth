@@ -164,10 +164,10 @@
 
                     //---- ghpedo panv apo omada A
                     let ghpedoDiv = document.createElement('div');
-                    ghpedoDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home');
+                    ghpedoDiv.classList.add('MatchListItem__Ghpedo');
 
                     let ghpedoNameSpan = document.createElement('span');
-                    ghpedoNameSpan.classList.add('MatchListItem__teamName');
+                    ghpedoNameSpan.classList.add('MatchListItem__ghpedoName');
                     ghpedoNameSpan.textContent = data.getFormattedValue(row, 5);   
 
                     ghpedoDiv.appendChild(ghpedoNameSpan);
@@ -337,7 +337,7 @@
 
                     //---- ghpedo panv apo omada A
                     let ghpedoDiv = document.createElement('div');
-                    ghpedoDiv.classList.add('MatchListItem__team', 'MatchListItem__team--home', 'MatchListItem__Ghpedo');
+                    ghpedoDiv.classList.add('MatchListItem__Ghpedo');
 
                     let ghpedoNameSpan = document.createElement('span');
                     ghpedoNameSpan.classList.add('MatchListItem__ghpedoName');
@@ -641,6 +641,19 @@
             line-height: 0.8;
         }
 
+        /* --- ΓΗΠΕΔΟ -- */
+
+        .MatchListItem__Ghpedo{
+            margin-bottom: 2px;
+            text-align: right;
+        }
+        .MatchListItem__ghpedoName{
+            color: #0c6ffd;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0em;
+        }
+
         /* --- ΟΜΑΔΕΣ ΑΓΩΝΑ -- */
         .MatchListItem__content {
             flex: 1;
@@ -666,23 +679,6 @@
             margin-right: auto;
         }
 
-        .MatchListItem__Ghpedo{
-            margin-bottom: 2px;
-        }
-        .MatchListItem__ghpedoName{
-            border-bottom: 1px dashed #003e5e59;
-            color: #003e5e59;
-            font-size: 11px;
-            font-weight: 900;
-            letter-spacing: 0.3em;
-            border-bottom: 1px solid #003e5e59;
-            text-decoration: underline;
-            text-decoration-color: #003e5e59;
-            text-underline-offset: 3px;
-            text-align: right;
-            padding-left: 0;
-            margin-left: 0;
-        }
 
 
         .MatchListItem__teamName,
