@@ -717,12 +717,37 @@
             /* ... άλλα υπάρχοντα στυλ ... */
         }
 
+
+            /* ====== Νέες κλάσεις για το γήπεδο ==== */
+            .MatchListItem__venue-container {
+                width: 100%;            /* Πιάνει όλο το πλάτος του γονέα του (iDivAgvnas) */
+                text-align: center;     /* Κεντράρει το περιεχόμενο του γηπέδου */
+                margin-bottom: 5px;     /* Μικρό κενό κάτω από το γήπεδο, πριν τις ομάδες */
+                padding: 0 10px;        /* Κάποιο οριζόντιο padding για να μην κολλάει το κείμενο στις άκρες */
+                box-sizing: border-box; /* Για σωστό υπολογισμό πλάτους με padding */
+            }
+
+            .MatchListItem__venue-name {
+                font-size: 0.8em;       /* Μέγεθος γραμματοσειράς - προσαρμόστε όπως θέλετε */
+                color: #495057;         /* Σκούρο γκρι χρώμα */
+                font-weight: 500;       /* Ελαφρώς πιο έντονο */
+                line-height: 1.3;       /* Απόσταση γραμμών για καλύτερη αναγνωσιμότητα */
+                word-wrap: break-word;  /* Διασπάει τις μακριές λέξεις */
+                overflow-wrap: break-word; /* Εναλλακτική/νεότερη ιδιότητα */
+            }
+
+        
+
         /* --- ΟΜΑΔΕΣ ΑΓΩΝΑ -- */
         .MatchListItem__content {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center; /* Center content vertically */
+            /* ΠΡΟΣΤΕΘΗΚΑΝ για την καλυτερη εμφανιση του γηπεδοου */
+            justify-content: space-around; /* Ή space-between, ανάλογα πώς θέλετε τις ομάδες */
+            align-items: center;
+            width: 100%; /* Διασφαλίζει ότι καλύπτει το διαθέσιμο πλάτος */            
         }
 
         .MatchListItem__team {
