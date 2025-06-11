@@ -202,7 +202,7 @@
                     let homeTeamScoreSpan = document.createElement('span');
                     homeTeamScoreSpan.classList.add('MatchListItem__teamScore');
                     const homeScore = parseFloat(data.getFormattedValue(row, 8)); // Μετατροπή σε αριθμό
-                    homeTeamScoreSpan.textContent = isNaN(homeScore) ? '-' : homeScore; // Εμφάνιση παύλας αν δεν είναι αριθμός
+                    homeTeamScoreSpan.textContent = isNaN(homeScore) ? '' : homeScore; // Εμφάνιση παύλας αν δεν είναι αριθμός
 
                     homeTeamDiv.appendChild(homeTeamNameSpan);
                     homeTeamDiv.appendChild(homeTeamScoreSpan);
@@ -376,7 +376,7 @@
                     let homeTeamScoreSpan = document.createElement('span');
                     homeTeamScoreSpan.classList.add('MatchListItem__teamScore');
                     const homeScore = parseFloat(data.getFormattedValue(row, 8)); // Μετατροπή σε αριθμό
-                    homeTeamScoreSpan.textContent = isNaN(homeScore) ? '-' : homeScore; // Εμφάνιση παύλας αν δεν είναι αριθμός
+                    homeTeamScoreSpan.textContent = isNaN(homeScore) ? '' : homeScore; // Εμφάνιση παύλας αν δεν είναι αριθμός
 
                     homeTeamDiv.appendChild(homeTeamNameSpan);
                     homeTeamDiv.appendChild(homeTeamScoreSpan);
@@ -478,7 +478,7 @@
 
                     // --- β. Κομισάριος (Column 2) ---
                     let komisariosCol = document.createElement('div');
-                    komisariosCol.classList.add('col-md-4', 'col-sm-12');
+                    komisariosCol.classList.add('col-md-4', 'col-sm-12', 'komisarios-column-to-hide');
 
                     let komisariosDiv = document.createElement('div');
                     komisariosDiv.classList.add('MatchListItem__section-title');
@@ -757,6 +757,15 @@
             padding-top: 0; /* Αφαιρέστε τυχόν padding-top από εδώ αν το βάλετε στο tab-content */
         }
             
+
+        /* Κρύψτε το Komisarios column σε οθόνες μικρότερες από το μέσο breakpoint (π.χ. 768px) */
+        @media (max-width: 767.98px) { /* Το 767.98px είναι το breakpoint του Bootstrap για sm προς md */
+            .komisarios-column-to-hide { /* Θα προσθέσουμε αυτή την κλάση με JS, ή απλά στοχεύστε το komisariosCol */
+                display: none !important; /* Χρησιμοποιήστε !important αν χρειάζεται να παρακάμψετε άλλους κανόνες */
+            }
+        }
+
+
     </style>
 
 </head>
