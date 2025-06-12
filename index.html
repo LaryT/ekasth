@@ -29,9 +29,22 @@
         // Set a callback to run when the Google Visualization API is loaded.
         google.charts.setOnLoadCallback(drawchart);
 
+
+
         // Global variables for data and row count, as they are used across functions
         let data;
         let posesEggrafes;
+
+        // --- Global Variables (Δηλώστε αυτές στην κορυφή του script σας) ---
+        // Αυτά θα αποθηκεύουν τα HTML στοιχεία των αγώνων για εύκολο φιλτράρισμα
+        const allMatchDefinitionItems = [];
+        // Αυτά θα συλλέγουν τα μοναδικά ονόματα για τα dropdowns
+        const uniqueReferees = new Set();
+        const uniqueCommissioners = new Set();
+        const uniqueJudges = new Set();
+
+
+
 
         function drawchart() {
             drawDiorganvseis();
@@ -326,7 +339,9 @@
 
         // --- Συνάρτηση για τη δημιουργία αγώνων με ΟΡΙΣΜΟΥΣ (για το tab 'ΟΡΙΣΜΟΙ') ---
         function renderOrismoi(parentElementId) {
+
                 const parentElement = document.getElementById(parentElementId);
+
                 if (!parentElement) {
                     console.error(`Το γονικό στοιχείο με ID '${parentElementId}' δεν βρέθηκε.`);
                     return;
@@ -341,6 +356,7 @@
 
 
                 for (let row = 0; row < posesEggrafes; row++) {
+
                     // metablhth gia to όταν υπάρχει ΡΕΠΟ σε μια ομάδα να μην εμφανίζονται οι διαιτητές - Κριτές κλπα
                     var isRepo=false;
 
@@ -436,13 +452,39 @@
                         formattedDate = `${day} ${monthAbbr}`;
                     }
 
+
+                    //----- iDivAgvnas 
                     let iDivAgvnas = document.createElement('div');
                     iDivAgvnas.id = 'agvnas-prg-div-' + row;
                     iDivAgvnas.className = 'row MatchListItem__wrapper MatchList__match';
+                    iDivAgvnas.classList.add('MatchListItem'); // Προσθέστε μια κλάση για να το αναγνωρίσετε εύκολα
 
+
+                    // --- Συλλογή Ονομάτων και Αποθήκευση σε Data Attributes ---
                     const teamAValue = data.getFormattedValue(row, 6);
                     const teamBValue = data.getFormattedValue(row, 7);
                     const statusValue = data.getFormattedValue(row, 2);
+
+                    // Ανάκτηση ονομάτων από τις στήλες (προσαρμόστε τους δείκτες στηλών σας)
+                    const diaititis1 = data.getFormattedValue(row, 10);
+                    const diaititis2 = data.getFormattedValue(row, 11);
+                    const diaititis3 = data.getFormattedValue(row, 12);
+                    const komisariosValue = data.getFormattedValue(row, 55); // Στήλη Κομισάριου
+                    const kritis1 = data.getFormattedValue(row, 13);
+                    const kritis2 = data.getFormattedValue(row, 14);
+                    const kritis3 = data.getFormattedValue(row, 15);
+
+
+                    // Φιλτράρουμε τα κενά/null/undefined ονόματα για να μην τα συμπεριλάβουμε
+                    const currentReferees = [diaititis1, diaititis2, diaititis3].filter(Boolean);
+                    const currentCommissioners = [komisariosValue].filter(Boolean);
+                    const currentJudges = [kritis1, kritis2, kritis3].filter(Boolean);                    
+
+                    console.log("currentReferees = " + currentReferees);
+                    console.log("currentCommissioners = " + currentReferees);
+                    console.log("currentJudges = " + currentReferees);
+
+
 
                     //--- για την ΩΡΑ ή την ένδειξη κατάστασης του αγώνα
                     if (teamAValue === "-" || teamBValue === "-") {
@@ -577,10 +619,6 @@
                     let diaititesList = document.createElement('ul');
                     diaititesList.classList.add('MatchListItem__list');
 
-                    const diaititis1 = data.getFormattedValue(row, 10);
-                    const diaititis2 = data.getFormattedValue(row, 11);
-                    const diaititis3 = data.getFormattedValue(row, 12);
-
                     if (diaititis1) {
                         let li1 = document.createElement('li');
                         li1.textContent = diaititis1;
@@ -614,7 +652,6 @@
                     komisariosDiv.textContent = 'ΚΟΜΙΣΑΡΙΟΣ:';
                     komisariosCol.appendChild(komisariosDiv);
 
-                    let komisariosValue = data.getFormattedValue(row, 55); // Use the correct column for commissioner
                     if (komisariosValue) {
                         let pKomisarios = document.createElement('p');
                         pKomisarios.classList.add('MatchListItem__single-value');
@@ -642,10 +679,6 @@
                     let kritesList = document.createElement('ul');
                     kritesList.classList.add('MatchListItem__list');
 
-                    // Assuming fields 13, 14, 15 for judges. Adjust if needed.
-                    const kritis1 = data.getFormattedValue(row, 13);
-                    const kritis2 = data.getFormattedValue(row, 14);
-                    const kritis3 = data.getFormattedValue(row, 15);
 
                     if (kritis1) {
                         let liKritis1 = document.createElement('li');
