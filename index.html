@@ -550,14 +550,15 @@
          * Εφαρμόζει τα επιλεγμένα φίλτρα στα στοιχεία των αγώνων.
          */
         function applyFilters() {
-            const selectedReferee = document.getElementById('refereeFilter').value;
-            const selectedCommissioner = document.getElementById('commissionerFilter').value;
-            const selectedJudge = document.getElementById('judgeFilter').value;
+            const refereeSelect = document.getElementById('refereeFilter');
+            const commissionerSelect = document.getElementById('commissionerFilter');
+            const judgeSelect = document.getElementById('judgeFilter');
 
-            // ΝΕΟ: Ανάκτηση της κατάστασης του διακόπτη ορατότητας ορισμών
-           // const showOrismoiDetails = document.getElementById('toggleOrismoiDetails').checked;  
+            const selectedReferee = refereeSelect.value;
+            const selectedCommissioner = commissionerSelect.value;
+            const selectedJudge = judgeSelect.value;
 
-
+            const toggleOrismoiDetails = document.getElementById('toggleOrismoiDetails');
             // ΝΕΟ: Ανάκτηση της κατάστασης του διακόπτη ορατότητας ορισμών
             const showOrismoiDetails = toggleOrismoiDetails.checked;
 
@@ -567,10 +568,27 @@
             // ΝΕΟ: Χειρισμός ορατότητας του filter-section div
             if (filterSectionDiv) {
                 filterSectionDiv.style.display = showOrismoiDetails ? '' : 'none';
-            }                      
+            }
+
+            // ΝΕΟ: Αν ο διακόπτης Ορισμών ΔΕΝ είναι επιλεγμένος, επαναφέρουμε τα φίλτρα στο "Όλα"
+            if (!showOrismoiDetails) {
+                refereeSelect.value = 'Όλα';
+                commissionerSelect.value = 'Όλα';
+                judgeSelect.value = 'Όλα';
+                // Προαιρετικά: Μπορείτε να απενεργοποιήσετε τα dropdowns αν είναι κρυμμένα
+                refereeSelect.disabled = true;
+                commissionerSelect.disabled = true;
+                judgeSelect.disabled = true;
+            } else {
+                // Ενεργοποιούμε τα dropdowns αν ο διακόπτης είναι επιλεγμένος
+                refereeSelect.disabled = false;
+                commissionerSelect.disabled = false;
+                judgeSelect.disabled = false;
+            }
+
 
             allMatchDefinitionItems.forEach(matchItem => {
-                // Διαβάζουμε τα data attributes. Χρησιμοποιούμε split(',') για να τα κάνουμε πάλι πίνακες.
+                // Διαβάζουμε τα data attributes. Χρησιμοποιούμε split(',') για να τα κάνουμε πάλαι πίνακες.
                 // Το filter(Boolean) αφαιρεί τυχόν κενά strings αν το data attribute ήταν άδειο.
                 const referees = matchItem.dataset.referees ? matchItem.dataset.referees.split(',').filter(Boolean) : [];
                 const commissioner = matchItem.dataset.commissioner || '';
@@ -590,7 +608,7 @@
                 // Εφαρμόζουμε την ορατότητα με βάση τα φίλτρα αγώνων
                 matchItem.style.display = shouldShowBasedOnFilters ? '' : 'none';
 
-                // ΝΕΟ: Χειρισμός ορατότητας του τμήματος ορισμών μέσα στον αγώνα
+                // Χειρισμός ορατότητας του τμήματος ορισμών μέσα στον αγώνα (ανά MatchListItem)
                 const orismoiDetailsDiv = matchItem.querySelector('.MatchListItem__orismoi-details');
                 if (orismoiDetailsDiv) {
                     orismoiDetailsDiv.style.display = showOrismoiDetails ? '' : 'none';
