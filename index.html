@@ -107,9 +107,19 @@
             populateFilterDropdowns();
 
             // Προσθέστε event listeners στα dropdowns, ώστε να καλείται η applyFilters() κάθε φορά που αλλάζει η επιλογή
-            document.getElementById('refereeFilter').addEventListener('change', applyFilters);
-            document.getElementById('commissionerFilter').addEventListener('change', applyFilters);
-            document.getElementById('judgeFilter').addEventListener('change', applyFilters);
+          //  document.getElementById('refereeFilter').addEventListener('change', applyFilters);
+          //  document.getElementById('commissionerFilter').addEventListener('change', applyFilters);
+          //  document.getElementById('judgeFilter').addEventListener('change', applyFilters);
+
+            // Προσθέστε event listeners στα dropdowns, ώστε να καλείται η handleExclusiveFilterChange() κάθε φορά που αλλάζει η επιλογή
+            document.getElementById('refereeFilter').addEventListener('change', handleExclusiveFilterChange);
+            document.getElementById('commissionerFilter').addEventListener('change', handleExclusiveFilterChange);
+            document.getElementById('judgeFilter').addEventListener('change', handleExclusiveFilterChange);
+
+            // Εφαρμόστε τα φίλτρα στην αρχική φόρτωση (ώστε να εμφανίζονται όλα)
+            applyFilters();
+
+
 
         }   //--- END of function handle_DrawDiorganvseis_DataQueryResponse(response)
 
@@ -796,8 +806,34 @@
                 matchItem.style.display = shouldShow ? '' : 'none'; // Εμφάνιση ή απόκρυψη
             });
         }
+        
+        /**
+         * Χειρίζεται την αλλαγή σε ένα φίλτρο, επαναφέροντας τα άλλα φίλτρα στο "Όλα"
+         * και στη συνέχεια εφαρμόζει τα φίλτρα.
+         * @param {Event} event - Το event αντικείμενο από την αλλαγή του dropdown.
+         */
+        function handleExclusiveFilterChange(event) {
+            const changedFilterId = event.target.id; // Το ID του dropdown που άλλαξε
 
+            const refereeSelect = document.getElementById('refereeFilter');
+            const commissionerSelect = document.getElementById('commissionerFilter');
+            const judgeSelect = document.getElementById('judgeFilter');
 
+            // Επαναφέρουμε τα άλλα dropdowns στο "Όλα"
+            if (changedFilterId === 'refereeFilter') {
+                commissionerSelect.value = 'Όλα';
+                judgeSelect.value = 'Όλα';
+            } else if (changedFilterId === 'commissionerFilter') {
+                refereeSelect.value = 'Όλα';
+                judgeSelect.value = 'Όλα';
+            } else if (changedFilterId === 'judgeFilter') {
+                refereeSelect.value = 'Όλα';
+                commissionerSelect.value = 'Όλα';
+            }
+
+            // Τώρα εφαρμόζουμε τα φίλτρα με τη νέα κατάσταση
+            applyFilters();
+        }        
 
 
     </script>
