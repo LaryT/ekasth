@@ -481,8 +481,19 @@
                     const currentJudges = [kritis1, kritis2, kritis3].filter(Boolean);                    
 
                     console.log("currentReferees = " + currentReferees);
-                    console.log("currentCommissioners = " + currentReferees);
-                    console.log("currentJudges = " + currentReferees);
+                    console.log("currentCommissioners = " + currentCommissioners);
+                    console.log("currentJudges = " + currentJudges);
+
+                    // Αποθηκεύουμε τα ονόματα ως data attributes για να τα διαβάσουμε κατά το φιλτράρισμα.
+                    // Χρησιμοποιούμε join(',') για να δημιουργήσουμε μια συμβολοσειρά από πίνακες.
+                    iDivAgvnas.dataset.referees = currentReferees.join(',');
+                    iDivAgvnas.dataset.commissioner = currentCommissioners.join(',');
+                    iDivAgvnas.dataset.judges = currentJudges.join(',');
+
+                    console.log("iDivAgvnas.id = " + iDivAgvnas.id);
+                    console.log("iDivAgvnas.dataset.referee (after join(',' ) = " + iDivAgvnas.dataset.referee);
+                    console.log("iDivAgvnas.dataset.commissioner = " + iDivAgvnas.dataset.commissioner);
+                    console.log("iDivAgvnas.dataset.judges = " + iDivAgvnas.dataset.judges);
 
 
 
