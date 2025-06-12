@@ -806,7 +806,7 @@
                 matchItem.style.display = shouldShow ? '' : 'none'; // Εμφάνιση ή απόκρυψη
             });
         }
-        
+
         /**
          * Χειρίζεται την αλλαγή σε ένα φίλτρο, επαναφέροντας τα άλλα φίλτρα στο "Όλα"
          * και στη συνέχεια εφαρμόζει τα φίλτρα.
@@ -1105,6 +1105,11 @@
 
                         <!-- ΝΕΟ: Πεδία Φίλτρων -->
                         <div class="filter-section p-3 bg-light rounded mb-3">
+                            <!-- ΝΕΟΣ ΔΙΑΚΟΠΤΗΣ ΓΙΑ ΟΡΑΤΟΤΗΤΑ ΟΡΙΣΜΩΝ -->
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="toggleOrismoiDetails" checked>
+                                <label class="form-check-label" for="toggleOrismoiDetails">Εμφάνιση Ορισμών (Διαιτητές, Κομισάριος, Κριτές)</label>
+                            </div>
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <label for="refereeFilter" class="form-label">Διαιτητές:</label>
