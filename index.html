@@ -113,7 +113,8 @@
             document.getElementById('judgeFilter').addEventListener('change', handleExclusiveFilterChange);
 
             // ΝΕΟ: Προσθέστε event listener στον διακόπτη ορατότητας
-            toggleOrismoiDetails.addEventListener('change', applyFilters); // Ο διακόπτης καλεί απευθείας applyFilters
+            toggleOrismoiDetails.addEventListener('change',handleExclusiveFilterChange);
+            // toggleOrismoiDetails.addEventListener('change', applyFilters); // Ο διακόπτης καλεί απευθείας applyFilters
 
             // Εφαρμόστε τα φίλτρα στην αρχική φόρτωση (ώστε να εμφανίζονται όλα)
             applyFilters();
