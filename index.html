@@ -103,7 +103,16 @@
             document.getElementById('pills-orismoi').classList.remove('show');
 
 
+            // Συμπληρώστε τα dropdowns αφού έχουν δημιουργηθεί όλα τα στοιχεία των αγώνων
+            populateFilterDropdowns();
+
+            // Προσθέστε event listeners στα dropdowns, ώστε να καλείται η applyFilters() κάθε φορά που αλλάζει η επιλογή
+            document.getElementById('refereeFilter').addEventListener('change', applyFilters);
+            document.getElementById('commissionerFilter').addEventListener('change', applyFilters);
+            document.getElementById('judgeFilter').addEventListener('change', applyFilters);
+
         }   //--- END of function handle_DrawDiorganvseis_DataQueryResponse(response)
+
 
         //---
 
@@ -513,7 +522,7 @@
                     parentElement.appendChild(iDivAgvnas);
 
 
-                // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---]
+                 // --- λογοτυπα Ομάδες και Σκορ Αγώνα ---]
 
                     let matchContentDiv = document.createElement('div');
                     matchContentDiv.classList.add('MatchListItem__content');
@@ -609,7 +618,7 @@
                     iDivAgvnas.appendChild(matchContentDiv);
 
 
-                // --- Προσθήκη των Στοιχείων Ορισμών (Διαιτητές, Κομισάριος, Κριτές) ---
+                 // --- Προσθήκη των Στοιχείων Ορισμών (Διαιτητές, Κομισάριος, Κριτές) ---
                     let orismoiDetailsDiv = document.createElement('div');
                     orismoiDetailsDiv.classList.add('MatchListItem__orismoi-details');
 
@@ -730,6 +739,36 @@
                     console.log("allMatchDefinitionItems.push(iDivAgvnas) = " + Array.from(allMatchDefinitionItems) );
                 }
         }
+
+        /**
+         * Συμπληρώνει τα dropdown φίλτρα με μοναδικά ονόματα.
+         */
+        function populateFilterDropdowns() {
+            const refereeSelect = document.getElementById('refereeFilter');
+            const commissionerSelect = document.getElementById('commissionerFilter');
+            const judgeSelect = document.getElementById('judgeFilter');
+
+            // Βοηθητική συνάρτηση για συμπλήρωση ενός dropdown
+            const populateSelect = (selectElement, namesSet) => {
+                // Καθαρίζουμε τις προηγούμενες επιλογές (εκτός από το "Όλα")
+                selectElement.innerHTML = '<option value="Όλα">Όλα</option>';
+                // Ταξινομούμε τα ονόματα αλφαβητικά πριν τα προσθέσουμε
+                const sortedNames = Array.from(namesSet).sort((a, b) => a.localeCompare(b, 'el', { sensitivity: 'base' }));
+                sortedNames.forEach(name => {
+                    const option = document.createElement('option');
+                    option.value = name;
+                    option.textContent = name;
+                    selectElement.appendChild(option);
+                });
+            };
+
+            populateSelect(refereeSelect, uniqueReferees);
+            populateSelect(commissionerSelect, uniqueCommissioners);
+            populateSelect(judgeSelect, uniqueJudges);
+        }
+
+
+
 
     </script>
 
