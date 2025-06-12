@@ -767,6 +767,36 @@
             populateSelect(judgeSelect, uniqueJudges);
         }
 
+        /**
+         * Εφαρμόζει τα επιλεγμένα φίλτρα στα στοιχεία των αγώνων.
+         */
+        function applyFilters() {
+            const selectedReferee = document.getElementById('refereeFilter').value;
+            const selectedCommissioner = document.getElementById('commissionerFilter').value;
+            const selectedJudge = document.getElementById('judgeFilter').value;
+
+            allMatchDefinitionItems.forEach(matchItem => {
+                // Διαβάζουμε τα data attributes. Χρησιμοποιούμε split(',') για να τα κάνουμε πάλι πίνακες.
+                // Το filter(Boolean) αφαιρεί τυχόν κενά strings αν το data attribute ήταν άδειο.
+                const referees = matchItem.dataset.referees ? matchItem.dataset.referees.split(',').filter(Boolean) : [];
+                const commissioner = matchItem.dataset.commissioner || '';
+                const judges = matchItem.dataset.judges ? matchItem.dataset.judges.split(',').filter(Boolean) : [];
+
+                // Έλεγχος για κάθε φίλτρο:
+                // Αν η επιλογή είναι "Όλα", τότε το φίλτρο ταιριάζει πάντα.
+                // Αλλιώς, ελέγχουμε αν το όνομα περιέχεται στον αντίστοιχο πίνακα (για διαιτητές/κριτές)
+                // ή αν ταιριάζει ακριβώς (για κομισάριο).
+                const refereeMatch = (selectedReferee === 'Όλα') || referees.includes(selectedReferee);
+                const commissionerMatch = (selectedCommissioner === 'Όλα') || commissioner === selectedCommissioner;
+                const judgeMatch = (selectedJudge === 'Όλα') || judges.includes(selectedJudge);
+
+                // Ένας αγώνας εμφανίζεται μόνο αν ΟΛΑ τα φίλτρα ταιριάζουν (λογική AND)
+                const shouldShow = refereeMatch && commissionerMatch && judgeMatch;
+
+                matchItem.style.display = shouldShow ? '' : 'none'; // Εμφάνιση ή απόκρυψη
+            });
+        }
+
 
 
 
