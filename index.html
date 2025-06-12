@@ -641,6 +641,17 @@
                 commissionerSelect.value = 'Όλα';
             }
 
+            const toggleOrismoiDetailsCheckbox = document.getElementById('toggleOrismoiDetails');
+            if( toggleOrismoiDetailsCheckbox.checked ){                              
+            }else{
+                commissionerSelect.value = 'Όλα';
+                refereeSelect.value = 'Όλα';
+                judgeSelect.value = 'Όλα';  
+            }
+
+           // toggleOrismoiDetails.addEventListener('change',handleExclusiveFilterChange);
+
+
             // Τώρα εφαρμόζουμε τα φίλτρα με τη νέα κατάσταση
             applyFilters();
         }        
