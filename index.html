@@ -486,14 +486,16 @@
                     iDivAgvnas.dataset.commissioner = currentCommissioners.join(',');
                     iDivAgvnas.dataset.judges = currentJudges.join(',');
 
+
+                    ///--- MONADIKOPOIH ONOMATA sta SET uniqueReferees
                     // Προσθέτουμε τα ονόματα στα Set (τα έχουμε δηλώσει στην αρχη αρχή uniqueReferees ) για να πάρουμε μοναδικές τιμές για τα dropdowns
                     currentReferees.forEach(name => uniqueReferees.add(name));
                     currentCommissioners.forEach(name => uniqueCommissioners.add(name));
                     currentJudges.forEach(name => uniqueJudges.add(name));
 
-                    console.log("uniqueReferees = " + Array.from(uniqueReferees));
-                    console.log("uniqueCommissioners = " + Array.from(uniqueCommissioners));
-                    console.log("uniqueJudges = " + Array.from(uniqueJudges));
+                  //  console.log("uniqueReferees = " + Array.from(uniqueReferees));
+                  //  console.log("uniqueCommissioners = " + Array.from(uniqueCommissioners));
+                  //  console.log("uniqueJudges = " + Array.from(uniqueJudges));
 
 
 
@@ -721,6 +723,11 @@
 
                     // Προσθήκη του νέου div ορισμών κάτω από το matchContentDiv
                     iDivAgvnas.appendChild(orismoiDetailsDiv);
+
+                    // Προσθέτουμε το δημιουργημένο στοιχείο στον global πίνακα για φιλτράρισμα
+                    allMatchDefinitionItems.push(iDivAgvnas);
+
+                    console.log("allMatchDefinitionItems.push(iDivAgvnas) = " + Array.from(allMatchDefinitionItems) );
                 }
         }
 
