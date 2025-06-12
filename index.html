@@ -116,6 +116,9 @@
             document.getElementById('commissionerFilter').addEventListener('change', handleExclusiveFilterChange);
             document.getElementById('judgeFilter').addEventListener('change', handleExclusiveFilterChange);
 
+            // ΝΕΟ: Προσθέστε event listener στον διακόπτη ορατότητας
+            toggleOrismoiDetails.addEventListener('change', applyFilters); // Ο διακόπτης καλεί απευθείας applyFilters
+
             // Εφαρμόστε τα φίλτρα στην αρχική φόρτωση (ώστε να εμφανίζονται όλα)
             applyFilters();
 
@@ -745,8 +748,6 @@
 
                     // Προσθέτουμε το δημιουργημένο στοιχείο στον global πίνακα για φιλτράρισμα
                     allMatchDefinitionItems.push(iDivAgvnas);
-
-                    console.log("allMatchDefinitionItems.push(iDivAgvnas) = " + Array.from(allMatchDefinitionItems) );
                 }
         }
 
@@ -785,6 +786,9 @@
             const selectedCommissioner = document.getElementById('commissionerFilter').value;
             const selectedJudge = document.getElementById('judgeFilter').value;
 
+            // ΝΕΟ: Ανάκτηση της κατάστασης του διακόπτη ορατότητας ορισμών
+            const showOrismoiDetails = document.getElementById('toggleOrismoiDetails').checked;            
+
             allMatchDefinitionItems.forEach(matchItem => {
                 // Διαβάζουμε τα data attributes. Χρησιμοποιούμε split(',') για να τα κάνουμε πάλι πίνακες.
                 // Το filter(Boolean) αφαιρεί τυχόν κενά strings αν το data attribute ήταν άδειο.
@@ -801,9 +805,16 @@
                 const judgeMatch = (selectedJudge === 'Όλα') || judges.includes(selectedJudge);
 
                 // Ένας αγώνας εμφανίζεται μόνο αν ΟΛΑ τα φίλτρα ταιριάζουν (λογική AND)
-                const shouldShow = refereeMatch && commissionerMatch && judgeMatch;
+                const shouldShowBasedOnFilters = refereeMatch && commissionerMatch && judgeMatch;
 
-                matchItem.style.display = shouldShow ? '' : 'none'; // Εμφάνιση ή απόκρυψη
+                // Εφαρμόζουμε την ορατότητα με βάση τα φίλτρα αγώνων
+                matchItem.style.display = shouldShowBasedOnFilters ? '' : 'none';
+
+                // ΝΕΟ: Χειρισμός ορατότητας του τμήματος ορισμών μέσα στον αγώνα
+                const orismoiDetailsDiv = matchItem.querySelector('.MatchListItem__orismoi-details');
+                if (orismoiDetailsDiv) {
+                    orismoiDetailsDiv.style.display = showOrismoiDetails ? '' : 'none';
+                }
             });
         }
 
