@@ -872,7 +872,7 @@
         /* Πρέπει να προσθέσουμε padding στο περιεχόμενο για να μην κρύβεται κάτω από το fixed header */
         .tab-content{
             /* Δώστε padding-top ίσο ή λίγο μεγαλύτερο από το συνολικό ύψος του sticky-header-tabs */
-            padding-top: 250px; /* Προσαρμόστε αυτό το ύψος ανάλογα με το πραγματικό ύψος του header+tabs */
+            padding-top: 150px; /* Προσαρμόστε αυτό το ύψος ανάλογα με το πραγματικό ύψος του header+tabs */
         }
 
         /* Προαιρετικά: Αν το .MatchcenterHomepageWidget έχει background-color, βεβαιωθείτε ότι το .sticky-header-tabs είναι το ίδιο ή διαφανές */
@@ -912,7 +912,14 @@
                     <label class="form-check-label" for="toggleOrismoiDetails">Εμφάνιση Ορισμών (Διαιτητές, Κομισάριος, Κριτές)</label>
                 </div>
                 <!-- ΤΕΛΟΣ ΔΙΑΚΟΠΤΗ -->
-                <!-- Πεδία Φίλτρων -->
+                               
+
+            </div>
+            <div class="tab-content" id="pills-tabContent">
+                <!-- ΤΟ TAB-PANE ΓΙΑ "ΑΓΩΝΕΣ" (pills-prg) ΑΦΑΙΡΕΘΗΚΕ, ΑΦΟΥ ΔΕΝ ΥΠΑΡΧΟΥΝ ΠΛΕΟΝ TABS -->
+                <!-- Το div pills-orismoi παραμένει ως το μόνο ενεργό τμήμα περιεχομένου -->
+                <div class="tab-pane fade show active" id="pills-orismoi" role="tabpanel" aria-labelledby="pills-orismoi-tab" tabindex="0">
+                    <!-- Πεδία Φίλτρων -->
                     <div class="filter-section p-3 bg-light rounded mb-3">
                         <div class="row g-3">
                             <div class="col-md-4">
@@ -938,14 +945,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- ΤΕΛΟΣ ΠΕΔΙΩΝ ΦΙΛΤΡΩΝ -->                 
-
-            </div>
-            <div class="tab-content" id="pills-tabContent">
-                <!-- ΤΟ TAB-PANE ΓΙΑ "ΑΓΩΝΕΣ" (pills-prg) ΑΦΑΙΡΕΘΗΚΕ, ΑΦΟΥ ΔΕΝ ΥΠΑΡΧΟΥΝ ΠΛΕΟΝ TABS -->
-                <!-- Το div pills-orismoi παραμένει ως το μόνο ενεργό τμήμα περιεχομένου -->
-                <div class="tab-pane fade show active" id="pills-orismoi" role="tabpanel" aria-labelledby="pills-orismoi-tab" tabindex="0">
-                  
+                    <!-- ΤΕΛΟΣ ΠΕΔΙΩΝ ΦΙΛΤΡΩΝ -->                    
 
                     <div class="container text-center" id="pills-orismoi-container-id">
                     </div>
