@@ -77,6 +77,23 @@
 
         function handle_DrawDiorganvseis_DataQueryResponse(response) {
 
+
+            // ΝΕΟ: Αναφορά στο loading spinner
+            const orismoiContainer = document.getElementById('pills-orismoi-container-id');
+            const toggleOrismoiDetails = document.getElementById('toggleOrismoiDetails'); // Αναφορά στο διακόπτη
+            const loadingSpinner = document.getElementById('loadingSpinner'); // ΝΕΟ: Αναφορά στο loading spinner
+
+
+            // 1. Εμφάνιση loading spinner στην αρχή
+            if (loadingSpinner) {
+                loadingSpinner.style.display = 'block';
+            }
+            // 2. Απόκρυψη του container αγώνων μέχρι να φορτώσουν
+            if (orismoiContainer) {
+                orismoiContainer.style.display = 'none';
+            }
+
+            //------ ΚΕΝΤΡΙΚΟΣ ΣΗΜΕΙΟ ΔΙΑΒΑΖΕΙ DATA
             if (response.isError()) {
                 alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
                 return;
@@ -90,11 +107,6 @@
             let curAgvnistikh_prg = "";
             let curOmilosKathgoria_orismoi = "";
             let curAgvnistikh_orismoi = "";
-
-            //--- trexei agvnes-apotelesmata mia fora arxika kai gemizei antistoixo tab
-            //-- renderMatches('pills-prg-container-id');
-            //-- document.getElementById('pills-prg').classList.add('active');
-            //-- document.getElementById('pills-prg').classList.add('show');
 
             //--- trexei orismous mia fora arxika kai gemizei antistoixo tab
             document.getElementById('pills-orismoi').classList.add('active');
@@ -112,7 +124,6 @@
             document.getElementById('refereeFilter').addEventListener('change', handleExclusiveFilterChange);
             document.getElementById('commissionerFilter').addEventListener('change', handleExclusiveFilterChange);
             document.getElementById('judgeFilter').addEventListener('change', handleExclusiveFilterChange);
-
             // ΝΕΟ: Προσθέστε event listener στον διακόπτη ορατότητας
             toggleOrismoiDetails.addEventListener('change',handleExclusiveFilterChange);
             // toggleOrismoiDetails.addEventListener('change', applyFilters); // Ο διακόπτης καλεί απευθείας applyFilters
@@ -120,13 +131,16 @@
             // Εφαρμόστε τα φίλτρα στην αρχική φόρτωση (ώστε να εμφανίζονται όλα)
             applyFilters();
 
-
+            // 3. Απόκρυψη loading spinner μετά την εμφάνιση των αγώνων/ορισμών
+                if (loadingSpinner) {
+                    loadingSpinner.style.display = 'none';
+                }
+                // 4. Εμφάνιση του container αγώνων
+                if (orismoiContainer) {
+                    orismoiContainer.style.display = 'block'; // Or '' if it's default is block/flex/grid
+                }
 
         }   //--- END of function handle_DrawDiorganvseis_DataQueryResponse(response)
-
-
-     
-
 
 
         // --- Συνάρτηση για τη δημιουργία αγώνων με ΟΡΙΣΜΟΥΣ (για το tab 'ΟΡΙΣΜΟΙ') ---
@@ -956,8 +970,7 @@
         }
 
         .custom-toggle-label-text {
-            /*  font: 400  0.85em / 1 'Inter', Helvetica, Arial, sans-serif; */
-            font-weight: 400; /* Μέτριο πάχος για καλύτερη αναγνωσιμότητα */
+            font-weight: 900; /* Μέτριο πάχος για καλύτερη αναγνωσιμότητα */
             letter-spacing: .12em;          
             color: #333; /* Χρώμα για το κείμενο του label */
             margin-left: 5px; /* Προσαρμόστε την απόσταση μεταξύ slider και κειμένου */
@@ -1067,6 +1080,16 @@
                     </div>
                     <!-- ΤΕΛΟΣ ΠΕΔΙΩΝ ΦΙΛΤΡΩΝ -->                    
 
+                    <!-- ΝΕΟ: LOADING INDICATOR -->
+                    <div id="loadingSpinner" class="text-center my-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Φόρτωση δεδομένων...</p>
+                    </div>
+                    <!-- ΤΕΛΟΣ LOADING INDICATOR -->
+                     
+                    
                     <div class="container text-center" id="pills-orismoi-container-id">
                     </div>
                 </div>
