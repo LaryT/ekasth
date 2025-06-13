@@ -13,7 +13,6 @@
 
 
     <title>Σήμερα | Πρόγραμμα αγώνων</title>
-    <!-- link href="https://fonts.googleapis.com/css?family=Fira+Sans:100,300" rel="stylesheet" / -->
     <link href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
@@ -43,8 +42,8 @@
         const uniqueReferees = new Set();
         const uniqueCommissioners = new Set();
         const uniqueJudges = new Set();
-
-
+        const uniqueGhpeda = new Set(); // ΝΕΟ: Set για τα γήπεδα
+        const uniqueTeams = new Set(); // ΝΕΟ: Set για τις ομάδες
 
 
         function drawchart() {
@@ -108,7 +107,7 @@
             let curOmilosKathgoria_orismoi = "";
             let curAgvnistikh_orismoi = "";
 
-            //--- trexei orismous mia fora arxika kai gemizei antistoixo tab
+            //--- trexei orismous mia fora arxika και γεμίζει antistoixo tab
             document.getElementById('pills-orismoi').classList.add('active');
             document.getElementById('pills-orismoi').classList.add('show');
             renderOrismoi('pills-orismoi-container-id');
@@ -124,6 +123,9 @@
             document.getElementById('refereeFilter').addEventListener('change', handleExclusiveFilterChange);
             document.getElementById('commissionerFilter').addEventListener('change', handleExclusiveFilterChange);
             document.getElementById('judgeFilter').addEventListener('change', handleExclusiveFilterChange);
+            document.getElementById('ghpedoFilter').addEventListener('change', handleExclusiveFilterChange); // ΝΕΟ: Listener για γήπεδο
+            document.getElementById('teamFilter').addEventListener('change', handleExclusiveFilterChange);     // ΝΕΟ: Listener για ομάδα
+
             // ΝΕΟ: Προσθέστε event listener στον διακόπτη ορατότητας
             toggleOrismoiDetails.addEventListener('change',handleExclusiveFilterChange);
             // toggleOrismoiDetails.addEventListener('change', applyFilters); // Ο διακόπτης καλεί απευθείας applyFilters
@@ -279,18 +281,24 @@
                     const kritis1 = data.getFormattedValue(row, 13);
                     const kritis2 = data.getFormattedValue(row, 14);
                     const kritis3 = data.getFormattedValue(row, 15);
-
+                    const ghpedoValue = data.getFormattedValue(row, 5); // ΝΕΟ: Τιμή γηπέδου
+                    
 
                     // Φιλτράρουμε τα κενά/null/undefined ονόματα για να μην τα συμπεριλάβουμε
                     const currentReferees = [diaititis1, diaititis2, diaititis3].filter(Boolean);
                     const currentCommissioners = [komisariosValue].filter(Boolean);
-                    const currentJudges = [kritis1, kritis2, kritis3].filter(Boolean);                    
+                    const currentJudges = [kritis1, kritis2, kritis3].filter(Boolean);
+                    const currentGhpedo = ghpedoValue; // ΝΕΟ
+                    const currentTeams = [teamAValue, teamBValue].filter(Boolean); // ΝΕΟ: Συλλέγουμε και τις δύο ομάδες
+                    
 
                     // Αποθηκεύουμε τα ονόματα ως data attributes για να τα διαβάσουμε κατά το φιλτράρισμα.
                     // Χρησιμοποιούμε join(',') για να δημιουργήσουμε μια συμβολοσειρά από πίνακες.
                     iDivAgvnas.dataset.referees = currentReferees.join(',');
                     iDivAgvnas.dataset.commissioner = currentCommissioners.join(',');
                     iDivAgvnas.dataset.judges = currentJudges.join(',');
+                    iDivAgvnas.dataset.ghpedo = currentGhpedo; // ΝΕΟ: Data attribute για το γήπεδο
+                    iDivAgvnas.dataset.teams = currentTeams.join(','); // ΝΕΟ: Data attribute για τις ομάδες
 
 
                     ///--- MONADIKOPOIH ONOMATA sta SET uniqueReferees
@@ -298,10 +306,15 @@
                     currentReferees.forEach(name => uniqueReferees.add(name));
                     currentCommissioners.forEach(name => uniqueCommissioners.add(name));
                     currentJudges.forEach(name => uniqueJudges.add(name));
+                    if (currentGhpedo) uniqueGhpeda.add(currentGhpedo); // ΝΕΟ: Προσθήκη γηπέδου στο set
+                    currentTeams.forEach(name => uniqueTeams.add(name)); // ΝΕΟ: Προσθήκη ομάδων στο set
+
 
                   //  console.log("uniqueReferees = " + Array.from(uniqueReferees));
                   //  console.log("uniqueCommissioners = " + Array.from(uniqueCommissioners));
                   //  console.log("uniqueJudges = " + Array.from(uniqueJudges));
+                  //  console.log("uniqueGhpeda = " + Array.from(uniqueGhpeda)); // ΝΕΟ
+                  //  console.log("uniqueTeams = " + Array.from(uniqueTeams));   // ΝΕΟ
 
 
 
@@ -331,7 +344,7 @@
 
                         let ghpedoNameSpan = document.createElement('span');
                         ghpedoNameSpan.classList.add('MatchListItem__ghpedoName');
-                        ghpedoNameSpan.textContent = data.getFormattedValue(row, 5);   
+                        ghpedoNameSpan.textContent = ghpedoValue; // Χρησιμοποιούμε τη συλλεγμένη τιμή
 
                         ghpedoDiv.appendChild(ghpedoNameSpan);
                         matchContentDiv.appendChild(ghpedoDiv);
@@ -361,7 +374,7 @@
 
                     let homeTeamNameSpan = document.createElement('span');
                     homeTeamNameSpan.classList.add('MatchListItem__teamName');
-                    homeTeamNameSpan.textContent = data.getFormattedValue(row, 6);
+                    homeTeamNameSpan.textContent = teamAValue; // Χρησιμοποιούμε τη συλλεγμένη τιμή
 
                     let homeTeamScoreSpan = document.createElement('span');
                     homeTeamScoreSpan.classList.add('MatchListItem__teamScore');
@@ -391,7 +404,7 @@
 
                     let awayTeamNameSpan = document.createElement('span');
                     awayTeamNameSpan.classList.add('MatchListItem__teamName');
-                    awayTeamNameSpan.textContent = data.getFormattedValue(row, 7);
+                    awayTeamNameSpan.textContent = teamBValue; // Χρησιμοποιούμε τη συλλεγμένη τιμή
 
                     let awayTeamScoreSpan = document.createElement('span');
                     awayTeamScoreSpan.classList.add('MatchListItem__teamScore');
@@ -542,6 +555,8 @@
             const refereeSelect = document.getElementById('refereeFilter');
             const commissionerSelect = document.getElementById('commissionerFilter');
             const judgeSelect = document.getElementById('judgeFilter');
+            const ghpedoSelect = document.getElementById('ghpedoFilter'); // ΝΕΟ
+            const teamSelect = document.getElementById('teamFilter');     // ΝΕΟ
 
             // Βοηθητική συνάρτηση για συμπλήρωση ενός dropdown
             const populateSelect = (selectElement, namesSet) => {
@@ -560,6 +575,8 @@
             populateSelect(refereeSelect, uniqueReferees);
             populateSelect(commissionerSelect, uniqueCommissioners);
             populateSelect(judgeSelect, uniqueJudges);
+            populateSelect(ghpedoSelect, uniqueGhpeda); // ΝΕΟ
+            populateSelect(teamSelect, uniqueTeams);     // ΝΕΟ
         }
 
         /**
@@ -569,10 +586,14 @@
             const refereeSelect = document.getElementById('refereeFilter');
             const commissionerSelect = document.getElementById('commissionerFilter');
             const judgeSelect = document.getElementById('judgeFilter');
+            const ghpedoSelect = document.getElementById('ghpedoFilter'); // ΝΕΟ
+            const teamSelect = document.getElementById('teamFilter');     // ΝΕΟ
 
             const selectedReferee = refereeSelect.value;
             const selectedCommissioner = commissionerSelect.value;
             const selectedJudge = judgeSelect.value;
+            const selectedGhpedo = ghpedoSelect.value; // ΝΕΟ
+            const selectedTeam = teamSelect.value;     // ΝΕΟ
 
             const toggleOrismoiDetails = document.getElementById('toggleOrismoiDetails');
             // ΝΕΟ: Ανάκτηση της κατάστασης του διακόπτη ορατότητας ορισμών
@@ -591,15 +612,21 @@
                 refereeSelect.value = 'Όλα';
                 commissionerSelect.value = 'Όλα';
                 judgeSelect.value = 'Όλα';
+                ghpedoSelect.value = 'Όλα'; // ΝΕΟ
+                teamSelect.value = 'Όλα';     // ΝΕΟ
                 // Προαιρετικά: Μπορείτε να απενεργοποιήσετε τα dropdowns αν είναι κρυμμένα
                 refereeSelect.disabled = true;
                 commissionerSelect.disabled = true;
                 judgeSelect.disabled = true;
+                ghpedoSelect.disabled = true; // ΝΕΟ
+                teamSelect.disabled = true;     // ΝΕΟ
             } else {
                 // Ενεργοποιούμε τα dropdowns αν ο διακόπτης είναι επιλεγμένος
                 refereeSelect.disabled = false;
                 commissionerSelect.disabled = false;
                 judgeSelect.disabled = false;
+                ghpedoSelect.disabled = false; // ΝΕΟ
+                teamSelect.disabled = false;     // ΝΕΟ
             }
 
 
@@ -609,17 +636,21 @@
                 const referees = matchItem.dataset.referees ? matchItem.dataset.referees.split(',').filter(Boolean) : [];
                 const commissioner = matchItem.dataset.commissioner || '';
                 const judges = matchItem.dataset.judges ? matchItem.dataset.judges.split(',').filter(Boolean) : [];
+                const ghpedo = matchItem.dataset.ghpedo || ''; // ΝΕΟ
+                const teams = matchItem.dataset.teams ? matchItem.dataset.teams.split(',').filter(Boolean) : []; // ΝΕΟ
 
                 // Έλεγχος για κάθε φίλτρο:
                 // Αν η επιλογή είναι "Όλα", τότε το φίλτρο ταιριάζει πάντα.
-                // Αλλιώς, ελέγχουμε αν το όνομα περιέχεται στον αντίστοιχο πίνακα (για διαιτητές/κριτές)
-                // ή αν ταιριάζει ακριβώς (για κομισάριο).
+                // Αλλιώς, ελέγχουμε αν το όνομα περιέχεται στον αντίστοιχο πίνακα (για διαιτητές/κριτές/ομάδες)
+                // ή αν ταιριάζει ακριβώς (για κομισάριο/γήπεδο).
                 const refereeMatch = (selectedReferee === 'Όλα') || referees.includes(selectedReferee);
                 const commissionerMatch = (selectedCommissioner === 'Όλα') || commissioner === selectedCommissioner;
                 const judgeMatch = (selectedJudge === 'Όλα') || judges.includes(selectedJudge);
+                const ghpedoMatch = (selectedGhpedo === 'Όλα') || ghpedo === selectedGhpedo; // ΝΕΟ
+                const teamMatch = (selectedTeam === 'Όλα') || teams.includes(selectedTeam); // ΝΕΟ
 
                 // Ένας αγώνας εμφανίζεται μόνο αν ΟΛΑ τα φίλτρα ταιριάζουν (λογική AND)
-                const shouldShowBasedOnFilters = refereeMatch && commissionerMatch && judgeMatch;
+                const shouldShowBasedOnFilters = refereeMatch && commissionerMatch && judgeMatch && ghpedoMatch && teamMatch; // ΝΕΟ: Προσθήκη νέων φίλτρων
 
                 // Εφαρμόζουμε την ορατότητα με βάση τα φίλτρα αγώνων
                 matchItem.style.display = shouldShowBasedOnFilters ? '' : 'none';
@@ -643,17 +674,35 @@
             const refereeSelect = document.getElementById('refereeFilter');
             const commissionerSelect = document.getElementById('commissionerFilter');
             const judgeSelect = document.getElementById('judgeFilter');
+            const ghpedoSelect = document.getElementById('ghpedoFilter'); // ΝΕΟ
+            const teamSelect = document.getElementById('teamFilter');     // ΝΕΟ
 
             // Επαναφέρουμε τα άλλα dropdowns στο "Όλα"
             if (changedFilterId === 'refereeFilter') {
                 commissionerSelect.value = 'Όλα';
                 judgeSelect.value = 'Όλα';
+                ghpedoSelect.value = 'Όλα'; // ΝΕΟ
+                teamSelect.value = 'Όλα';     // ΝΕΟ
             } else if (changedFilterId === 'commissionerFilter') {
                 refereeSelect.value = 'Όλα';
                 judgeSelect.value = 'Όλα';
+                ghpedoSelect.value = 'Όλα'; // ΝΕΟ
+                teamSelect.value = 'Όλα';     // ΝΕΟ
             } else if (changedFilterId === 'judgeFilter') {
                 refereeSelect.value = 'Όλα';
                 commissionerSelect.value = 'Όλα';
+                ghpedoSelect.value = 'Όλα'; // ΝΕΟ
+                teamSelect.value = 'Όλα';     // ΝΕΟ
+            } else if (changedFilterId === 'ghpedoFilter') { // ΝΕΟ
+                refereeSelect.value = 'Όλα';
+                commissionerSelect.value = 'Όλα';
+                judgeSelect.value = 'Όλα';
+                teamSelect.value = 'Όλα';
+            } else if (changedFilterId === 'teamFilter') { // ΝΕΟ
+                refereeSelect.value = 'Όλα';
+                commissionerSelect.value = 'Όλα';
+                judgeSelect.value = 'Όλα';
+                ghpedoSelect.value = 'Όλα';
             }
 
             const toggleOrismoiDetailsCheckbox = document.getElementById('toggleOrismoiDetails');
@@ -662,6 +711,8 @@
                 commissionerSelect.value = 'Όλα';
                 refereeSelect.value = 'Όλα';
                 judgeSelect.value = 'Όλα';  
+                ghpedoSelect.value = 'Όλα'; // ΝΕΟ
+                teamSelect.value = 'Όλα';     // ΝΕΟ
             }
 
            // toggleOrismoiDetails.addEventListener('change',handleExclusiveFilterChange);
@@ -903,7 +954,7 @@
             padding-top: 0; /* Αφαιρέστε τυχόν padding-top από εδώ αν το βάλετε στο tab-content */
         }
         
-        /****  ΔΙΑΚΟΠΤΗΣ επιλογής ΕΜΦΑΝΙΣΗΣ ΟΡΙΣΜΩΝ ή ΜΟΝΟ ΠΡΟΓΡΑΜΜΑΤΟΣ    ***/
+        /**** ΔΙΑΚΟΠΤΗΣ επιλογής ΕΜΦΑΝΙΣΗΣ ΟΡΙΣΜΩΝ ή ΜΟΝΟ ΠΡΟΓΡΑΜΜΑΤΟΣ    ***/
 
         /* CSS for the custom switch */
         .custom-toggle-container {
@@ -1035,7 +1086,6 @@
                     MATCH<small class="text-body-secondary">CENTER</small>
                 </h3>
 
-                <!-- ΝΕΟΣ, ΠΙΟ ΕΝΤΥΠΩΣΙΑΚΟΣ ΔΙΑΚΟΠΤΗΣ ΓΙΑ ΟΡΑΤΟΤΗΤΑ ΟΡΙΣΜΩΝ -->
                 <div class="custom-toggle-container text-center mb-3">
                     <label class="custom-toggle-switch">
                         <span class="custom-toggle-label-text">ΑΓΩΝΕΣ</span>
@@ -1044,52 +1094,49 @@
                         <span class="custom-toggle-label-text">ΟΡΙΣΜΟΙ</span>
                     </label>
                 </div>
-                <!-- ΤΕΛΟΣ ΝΕΟΥ ΔΙΑΚΟΠΤΗ -->
-                               
-
-            </div>
+                </div>
             <div class="tab-content" id="pills-tabContent">
-                <!-- ΤΟ TAB-PANE ΓΙΑ "ΑΓΩΝΕΣ" (pills-prg) ΑΦΑΙΡΕΘΗΚΕ, ΑΦΟΥ ΔΕΝ ΥΠΑΡΧΟΥΝ ΠΛΕΟΝ TABS -->
-                <!-- Το div pills-orismoi παραμένει ως το μόνο ενεργό τμήμα περιεχομένου -->
                 <div class="tab-pane fade show active" id="pills-orismoi" role="tabpanel" aria-labelledby="pills-orismoi-tab" tabindex="0">
-                    <!-- Πεδία Φίλτρων -->
                     <div class="filter-section p-3 bg-light rounded mb-3">
                         <div class="row g-3">
                             <div class="col-md-4">
                                 <label for="refereeFilter" class="form-label">Διαιτητές:</label>
                                 <select class="form-select" id="refereeFilter">
                                     <option value="Όλα">Όλα</option>
-                                    <!-- Options θα συμπληρωθούν από JS -->
-                                </select>
+                                    </select>
                             </div>
                             <div class="col-md-4">
                                 <label for="commissionerFilter" class="form-label">Κομισάριος:</label>
                                 <select class="form-select" id="commissionerFilter">
                                     <option value="Όλα">Όλα</option>
-                                    <!-- Options θα συμπληρωθούν από JS -->
-                                </select>
+                                    </select>
                             </div>
                             <div class="col-md-4">
                                 <label for="judgeFilter" class="form-label">Κριτές:</label>
                                 <select class="form-select" id="judgeFilter">
                                     <option value="Όλα">Όλα</option>
-                                    <!-- Options θα συμπληρωθούν από JS -->
-                                </select>
+                                    </select>
                             </div>
-                        </div>
+                            <div class="col-md-4">
+                                <label for="ghpedoFilter" class="form-label">Γήπεδο:</label>
+                                <select class="form-select" id="ghpedoFilter">
+                                    <option value="Όλα">Όλα</option>
+                                    </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="teamFilter" class="form-label">Ομάδα:</label>
+                                <select class="form-select" id="teamFilter">
+                                    <option value="Όλα">Όλα</option>
+                                    </select>
+                            </div>
+                            </div>
                     </div>
-                    <!-- ΤΕΛΟΣ ΠΕΔΙΩΝ ΦΙΛΤΡΩΝ -->                    
-
-                    <!-- ΝΕΟ: LOADING INDICATOR -->
                     <div id="loadingSpinner" class="text-center my-5">
                         <div class="spinner-border text-primary" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
                         <p class="mt-2">Φόρτωση δεδομένων...</p>
                     </div>
-                    <!-- ΤΕΛΟΣ LOADING INDICATOR -->
-                     
-                    
                     <div class="container text-center" id="pills-orismoi-container-id">
                     </div>
                 </div>
