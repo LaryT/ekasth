@@ -661,6 +661,13 @@
     </script>
 
     <style>
+
+        /* Γενικές ρυθμίσεις για όλο το widget αν δεν υπάρχουν ήδη */
+        .MatchcenterWidget {
+            font-family: 'Inter', sans-serif; /* Ορίζουμε την Inter ως default για το widget */
+            color: #333; /* Γενικό χρώμα κειμένου για ομοιομορφία */
+        }
+
         .MatchcenterHomepageWidget__header {
             color: #0f253a;
             font: 400 2.5em / 1 Mansalva, Helvetica, Arial, sans-serif;
@@ -894,14 +901,15 @@
             display: inline-flex; /* Χρησιμοποιούμε flex για να ευθυγραμμίσουμε το checkbox, το slider και το κείμενο */
             align-items: center; /* Κεντράρει κάθετα τα στοιχεία μέσα στον διακόπτη */
             cursor: pointer;
+            font-family: 'Inter', sans-serif; /* Ορισμός γραμματοσειράς */
             font-size: 1.1em; /* Ελαφρώς μεγαλύτερο κείμενο για το label */
+            font-weight: 500; /* Μέτριο πάχος για καλύτερη αναγνωσιμότητα */
             -webkit-user-select: none; /* Αποτρέπουμε την επιλογή κειμένου */
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            gap: 10px; /* Απόσταση μεταξύ slider και κειμένου */
+            gap: 5px; /* Απόσταση μεταξύ slider και κειμένου 10 px αρχικο*/
             padding: 5px 0; /* Κάποιο padding για οπτική άνεση */
-            font-family: 'Inter', sans-serif; /* Ορισμός γραμματοσειράς */
 
         }
 
